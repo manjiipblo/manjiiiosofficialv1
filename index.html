@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANJII iOS - Official Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --galaxy-bg: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            --neon-blue: #00d2ff;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--galaxy-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 500px; /* Sempit agar bagus di SS */
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 3px; }
+        b { color: var(--neon-blue); }
+
+        .btn-galaxy {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        .btn-galaxy:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .product-item {
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+        }
+
+        .price-tag { float: right; color: #00ff88; font-weight: bold; }
+        
+        .tab-menu { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-menu button { flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: none; color: white; cursor: pointer; border-radius: 10px; }
+        .tab-menu .active { background: var(--neon-blue); color: black; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <h1>MANJII iOS</h1>
+        <p>Premium Optimization & High Performance</p>
+    </div>
+
+    <div class="glass-card">
+        <div class="tab-menu">
+            <button class="active">Customer</button>
+            <button>Reseller</button>
+        </div>
+        <input type="text" placeholder="Username Telegram" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none;">
+        <button class="btn-galaxy">MASUK / SIGN UP</button>
+    </div>
+
+    <div class="glass-card">
+        <h3>LIST PRODUK</h3>
+        
+        <div class="product-item">
+            <b>1. PANEL iOS</b>
+            <span class="price-tag">350k</span>
+            <p style="font-size: 0.8em; opacity: 0.7;">Optimasi brutal, Aimbot & Visuals, Anti-Record.</p>
+            <button class="btn-galaxy">BELI SEKARANG</button>
+        </div>
+
+        <div class="product-item">
+            <b>2. INJECTOR iOS/ANDRO</b>
+            <span class="price-tag">Cek Key</span>
+            <p style="font-size: 0.8em; opacity: 0.7;">Pilih Key License sesuai durasi yang diinginkan.</p>
+            <button class="btn-galaxy">LIHAT KEY LICENSE</button>
+        </div>
+
+        <div class="product-item">
+            <b>3. CHEAT iOS</b>
+            <span class="price-tag">250k</span>
+            <p style="font-size: 0.8em; opacity: 0.7;">Pilihan: Aimbody, Aimneck, Aimdrag, Aimchest.</p>
+            <button class="btn-galaxy">BELI SEKARANG</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
