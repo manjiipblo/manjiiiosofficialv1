@@ -9,8 +9,8 @@
         :root {
             --accent: #00d2ff;
             --purple: #9d50bb;
-            --glow: 0 0 20px rgba(0, 210, 255, 0.8), 0 0 40px rgba(0, 210, 255, 0.4);
-            --text-glow: 0 0 10px rgba(0, 210, 255, 1), 0 0 20px rgba(0, 210, 255, 0.5);
+            --neon-glow: 0 0 20px rgba(0, 210, 255, 0.8), 0 0 40px rgba(0, 210, 255, 0.4);
+            --text-glow: 0 0 15px rgba(0, 210, 255, 1), 0 0 30px rgba(0, 210, 255, 0.5);
         }
 
         body {
@@ -21,62 +21,59 @@
             display: flex; justify-content: center; min-height: 100vh;
         }
 
-        /* Navbar & Saldo */
+        /* Navbar & Balance */
         .navbar {
             position: fixed; top: 0; width: 100%; max-width: 500px;
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px; box-sizing: border-box; z-index: 100;
             backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .balance-box {
+        .balance-pill {
             background: rgba(0, 210, 255, 0.1);
             border: 1px solid var(--accent);
             padding: 8px 15px; border-radius: 50px;
             font-family: 'Orbitron'; font-size: 11px;
-            box-shadow: var(--glow); display: none;
-            animation: pulseGlow 2s infinite;
+            box-shadow: var(--neon-glow); display: none;
+            animation: pulse 2s infinite;
         }
-        @keyframes pulseGlow { 0%, 100% { box-shadow: var(--glow); } 50% { box-shadow: 0 0 30px var(--accent); } }
+        @keyframes pulse { 0%, 100% { box-shadow: var(--neon-glow); } 50% { box-shadow: 0 0 40px var(--accent); } }
 
         .container { width: 100%; max-width: 480px; padding: 100px 20px 40px; box-sizing: border-box; }
 
-        /* Branding */
-        .brand { text-align: center; margin-bottom: 40px; }
-        .logo {
+        /* Neon Branding */
+        .logo-box {
             width: 80px; height: 80px; margin: 0 auto 15px;
             background: linear-gradient(45deg, var(--accent), var(--purple));
-            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            border-radius: 22px; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 50px var(--accent); font-size: 40px;
         }
         h1 { 
             font-family: 'Orbitron'; font-size: 28px; letter-spacing: 5px; 
-            text-shadow: var(--text-glow); margin: 0;
+            text-shadow: var(--text-glow); text-align: center; margin: 0;
         }
 
-        /* Galaxy Card */
-        .card {
+        /* Galaxy Cards */
+        .galaxy-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px; padding: 30px;
-            backdrop-filter: blur(30px);
+            border-radius: 28px; padding: 30px; margin-bottom: 25px;
+            backdrop-filter: blur(25px);
         }
 
-        /* Inputs */
         .input-box {
-            width: 100%; padding: 18px; margin-top: 10px;
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px; color: white; box-sizing: border-box;
-            font-family: 'Rajdhani'; font-size: 16px; transition: 0.3s;
+            padding: 18px; border-radius: 16px; color: white; width: 100%;
+            margin-top: 10px; box-sizing: border-box; font-family: 'Rajdhani'; font-size: 16px;
         }
-        .input-box:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent); outline: none; }
+        .input-box:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px var(--accent); }
 
         /* Super Neon Buttons */
         .btn-neon {
             width: 100%; padding: 18px; border-radius: 18px;
-            border: none; cursor: pointer; font-family: 'Orbitron';
-            font-size: 13px; letter-spacing: 2px; font-weight: bold;
+            border: none; cursor: pointer; font-weight: bold;
+            font-family: 'Orbitron'; font-size: 13px; letter-spacing: 2px;
             transition: 0.4s; margin-top: 15px;
-            background: #000; color: #fff;
+            background: #000; color: white;
             border-bottom: 4px solid var(--accent);
             text-shadow: 0 0 10px #fff;
         }
@@ -86,159 +83,157 @@
             border-bottom: 4px solid #fff;
         }
 
-        /* Product List */
+        /* Product List Style */
         .product-item {
             display: flex; align-items: center; justify-content: space-between;
             background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px;
         }
-        .p-name { font-family: 'Orbitron'; font-size: 14px; text-shadow: 0 0 5px var(--accent); }
-        .btn-buy {
+        .btn-buy-small {
             background: var(--accent); color: black; border: none;
             padding: 8px 15px; border-radius: 10px; font-family: 'Orbitron';
-            font-size: 10px; cursor: pointer; box-shadow: 0 0 15px var(--accent);
+            font-size: 10px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 0 15px var(--accent);
         }
 
-        /* Loading Overlay */
-        #loading {
+        /* Loading Screen */
+        #loadingOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(5,6,8,0.98); z-index: 1000;
             display: none; flex-direction: column; align-items: center; justify-content: center;
         }
         .loader {
-            width: 60px; height: 60px; border: 5px solid rgba(0,210,255,0.1);
+            width: 70px; height: 70px; border: 5px solid rgba(255,255,255,0.1);
             border-top: 5px solid var(--accent); border-radius: 50%;
             animation: spin 1s linear infinite; box-shadow: 0 0 20px var(--accent);
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .section { display: none; }
-        .active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .active { display: block; animation: zoomIn 0.4s ease forwards; }
+        @keyframes zoomIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
 <div class="navbar">
     <div style="font-family: 'Orbitron'; color: var(--accent); text-shadow: var(--text-glow);">⚡ M-iOS</div>
-    <div class="balance-box" id="balanceArea">💰 RP <span id="balVal">0</span></div>
+    <div class="balance-pill" id="balanceArea">💰 Rp <span id="balVal">0</span></div>
 </div>
 
-<div id="loading">
+<div id="loadingOverlay">
     <div class="loader"></div>
-    <h3 style="font-family: 'Orbitron'; margin-top: 20px; color: var(--accent); text-shadow: var(--text-glow);">VERIFYING...</h3>
+    <h3 style="font-family: 'Orbitron'; color: var(--accent); margin-top: 20px; text-shadow: var(--text-glow);">PROCESSING...</h3>
 </div>
 
 <div class="container">
     <div id="loginSec" class="section active">
-        <div class="brand">
-            <div class="logo">🚀</div>
-            <h1>MANJII iOS</h1>
-        </div>
-        <div class="card">
+        <div class="logo-box">💎</div>
+        <h1>MANJII iOS</h1>
+        <div class="galaxy-card" style="margin-top: 30px;">
             <div style="display: flex; gap: 10px; margin-bottom: 25px;">
                 <button class="btn-neon" style="margin:0; flex:1;" id="tabCus">CUSTOMER</button>
-                <button class="btn-neon" style="margin:0; flex:1; border-color: var(--purple);" id="tabRes">RESELLER</button>
+                <button class="btn-neon" style="margin:0; flex:1; border-bottom-color: var(--purple);" id="tabRes">RESELLER</button>
             </div>
             <input type="text" id="logU" class="input-box" placeholder="USERNAME">
             <input type="password" id="logP" class="input-box" placeholder="PASSWORD">
-            <button class="btn-neon" onclick="tryLogin()" style="background: var(--accent); color: black;">MASUK SISTEM</button>
-            <p id="regArea" style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
+            <button class="btn-neon" onclick="tryLogin()" style="background: var(--accent); color: black;">LOGIN ➔</button>
+            <p id="regText" style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
                 Belum punya akun? <a href="javascript:void(0)" onclick="showSec('regSec')" style="color: var(--accent);">Daftar</a>
             </p>
         </div>
     </div>
 
     <div id="regSec" class="section">
-        <h1>DAFTAR</h1>
-        <div class="card">
+        <h1>DAFTAR AKUN</h1>
+        <div class="galaxy-card" style="margin-top: 20px;">
             <input type="text" id="regU" class="input-box" placeholder="USERNAME BARU">
             <input type="password" id="regP" class="input-box" placeholder="PASSWORD BARU">
-            <button class="btn-neon" onclick="doRegister()" style="background: var(--purple);">DAFTAR SEKARANG</button>
+            <button class="btn-neon" onclick="doRegister()" style="background: var(--purple);">REGISTER</button>
             <button onclick="showSec('loginSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">⬅ KEMBALI</button>
         </div>
     </div>
 
     <div id="prodSec" class="section">
-        <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 id="roleTag" style="font-family: 'Orbitron'; color: var(--accent); margin:0;">PANEL</h3>
-                <button onclick="logout()" style="background:none; border:none; color:red; font-size:12px; cursor:pointer;">LOGOUT</button>
+        <div class="galaxy-card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <h3 id="roleLabel" style="font-family: 'Orbitron'; color: var(--accent); margin:0;">PANEL</h3>
+                <span onclick="logout()" style="color:red; cursor:pointer; font-size:12px;">LOGOUT</span>
             </div>
             <div id="plist"></div>
         </div>
     </div>
 
     <div id="buySec" class="section">
-        <div class="card">
-            <h2 id="selName" style="font-family: 'Orbitron'; margin:0;">PRODUK</h2>
-            <div id="priceDisplay" style="color: #00ff88; font-family: 'Orbitron'; font-size: 20px; margin: 10px 0;">Rp 0</div>
+        <div class="galaxy-card">
+            <h2 id="selName" style="font-family: 'Orbitron'; margin:0;">PRODUCT</h2>
+            <div id="selPrice" style="color: #00ff88; font-family: 'Orbitron'; font-size: 20px; margin: 10px 0;">Rp 0</div>
             <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 20px 0;">
             
-            <div id="keyOptions" style="display:none; margin-bottom: 20px;">
-                <label style="font-size: 11px; opacity: 0.5;">PILIH DURASI KEY:</label>
-                <select id="keySelect" class="input-box" onchange="updateKeyPrice()">
+            <div id="keyBox" style="display:none; margin-bottom: 20px;">
+                <label style="font-size: 11px; opacity: 0.5;">PILIH DURASI:</label>
+                <select id="keySel" class="input-box" onchange="updateKeyPrice()">
                     </select>
             </div>
 
-            <label style="font-size: 11px; opacity: 0.5;">TELEGRAM USERNAME</label>
+            <label style="font-size: 11px; opacity: 0.5;">USERNAME TELEGRAM</label>
             <input type="text" id="tg" class="input-box" placeholder="@username">
-            <label style="font-size: 11px; opacity: 0.5; margin-top: 15px; display:block;">NOTE (CATATAN)</label>
-            <textarea id="note" class="input-box" style="height: 60px;"></textarea>
+            <label style="font-size: 11px; opacity: 0.5; display:block; margin-top:15px;">NOTE (CATATAN)</label>
+            <textarea id="note" class="input-box" style="height: 70px;"></textarea>
 
-            <button class="btn-neon" onclick="toReview()" style="background: var(--accent); color: black;">CEK STATUS FORMAT</button>
+            <button class="btn-neon" onclick="toReview()" style="background: var(--accent); color: black;">CEK FORMAT PEMBELIAN</button>
             <button onclick="showSec('prodSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">⬅ KEMBALI</button>
         </div>
     </div>
 
     <div id="revSec" class="section">
-        <div class="card">
-            <h3 style="font-family: 'Orbitron'; text-align: center;">KONFIRMASI</h3>
-            <div id="revDetail" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; font-size: 14px; line-height: 2;"></div>
-            <button class="btn-neon" onclick="payNow()" style="background: #00ff88; color: black;">BAYAR SEKARANG</button>
+        <div class="galaxy-card">
+            <h3 style="font-family: 'Orbitron'; text-align: center;">KONFIRMASI ORDER</h3>
+            <div id="revInfo" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; font-size: 14px; line-height: 2;"></div>
+            <button class="btn-neon" onclick="doPay()" style="background: #00ff88; color: black;">BAYAR SEKARANG</button>
             <button onclick="showSec('buySec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">BATAL</button>
         </div>
     </div>
 
     <div id="pendSec" class="section">
-        <div class="card" style="text-align: center; border-color: orange;">
+        <div class="galaxy-card" style="text-align: center;">
             <div style="font-size: 50px;">⏳</div>
-            <h3 style="font-family: 'Orbitron'; color: orange;">ORDER PENDING</h3>
-            <div id="trxId" style="background:#111; padding:15px; border-radius:12px; font-family:monospace; margin:15px 0; color:var(--accent);">#MJ_XXX</div>
-            <p style="font-size:12px; opacity:0.6;">Pesanan sedang diverifikasi admin. Produk dikirim otomatis ke Telegram.</p>
-            <button class="btn-neon" onclick="showSec('prodSec')">BELI LAGI</button>
+            <h3 style="font-family: 'Orbitron'; color: orange; text-shadow: 0 0 10px orange;">PENDING...</h3>
+            <div id="trx" style="background:#111; padding:15px; border-radius:12px; font-family:monospace; margin:15px 0; color:var(--accent);">#MJ_XXX</div>
+            <p style="font-size: 12px; opacity: 0.6;">Pesanan Anda sedang diproses oleh admin manjii ios.</p>
+            <button class="btn-neon" onclick="showSec('prodSec')">KEMBALI KE MENU</button>
         </div>
     </div>
 </div>
 
 <script>
-    // SISTEM PENYIMPANAN PERMANEN (Local Storage)
-    if(!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify({"admin":"123"}));
-    if(!localStorage.getItem('resellers')) localStorage.setItem('resellers', JSON.stringify({"reseller_vip":"vip777"}));
+    // SIMPAN AKUN PERMANEN (localStorage)
+    if(!localStorage.getItem('u_db')) localStorage.setItem('u_db', JSON.stringify({"admin":"manjii123"}));
+    if(!localStorage.getItem('r_db')) localStorage.setItem('r_db', JSON.stringify({"reseller_vip":"vip777"}));
 
-    let curRole = 'customer';
-    let curUser = localStorage.getItem('loggedUser') || null;
+    let role = 'customer';
+    let user = localStorage.getItem('manjii_user') || null;
     let balance = 0;
-    let selectedItem = null;
+    let selected = null;
 
-    const db = {
+    const data = {
         customer: [
             {n:"PANEL iOS", p:350000},
-            {n:"INJECTOR iOS/ANDRO", isKey:true},
+            {n:"INJECTOR iOS/ANDRO", isK:true},
             {n:"CHEAT iOS", p:250000},
             {n:"GBOX 1 TAHUN", p:150000},
             {n:"ESIGN 1 TAHUN", p:150000}
         ],
         reseller: [
             {n:"PANEL iOS", p:350000},
-            {n:"INJECTOR iOS/ANDRO", isKey:true},
+            {n:"INJECTOR iOS/ANDRO", isK:true},
             {n:"CHEAT iOS", p:200000},
             {n:"GBOX 1 TAHUN", p:130000},
             {n:"ESIGN 1 TAHUN", p:130000}
         ]
     };
 
-    const keys = {
+    const keyPrices = {
         customer: { "1 DAY":25000, "7 DAY":50000, "30 DAY":70000, "90 DAY":100000, "180 DAY":140000, "218 DAY":160000 },
         reseller: { "1 DAY":20000, "7 DAY":40000, "30 DAY":55000, "90 DAY":85000, "180 DAY":120000, "218 DAY":145000 }
     };
@@ -246,21 +241,21 @@
     function showSec(id) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
     }
 
-    // AUTH
     function tryLogin() {
         const u = document.getElementById('logU').value;
         const p = document.getElementById('logP').value;
-        const store = JSON.parse(localStorage.getItem(curRole === 'customer' ? 'users' : 'resellers'));
+        const db = JSON.parse(localStorage.getItem(role === 'customer' ? 'u_db' : 'r_db'));
 
-        if(store[u] && store[u] === p) {
-            curUser = u;
-            localStorage.setItem('loggedUser', u);
-            localStorage.setItem('role', curRole);
-            initApp();
+        if(db[u] && db[u] === p) {
+            user = u;
+            localStorage.setItem('manjii_user', u);
+            localStorage.setItem('manjii_role', role);
+            startApp();
         } else {
-            alert("Akun tidak valid!");
+            alert("Akun tidak terdaftar atau salah!");
         }
     }
 
@@ -268,98 +263,102 @@
         const u = document.getElementById('regU').value;
         const p = document.getElementById('regP').value;
         if(!u || !p) return alert("Isi data!");
-        let users = JSON.parse(localStorage.getItem('users'));
-        users[u] = p;
-        localStorage.setItem('users', JSON.stringify(users));
-        alert("Berhasil Daftar! Silakan Login.");
+        let db = JSON.parse(localStorage.getItem('u_db'));
+        db[u] = p;
+        localStorage.setItem('u_db', JSON.stringify(db));
+        alert("Daftar Berhasil! Login Sekarang.");
         showSec('loginSec');
     }
 
-    function initApp() {
-        curRole = localStorage.getItem('role') || 'customer';
+    function startApp() {
+        role = localStorage.getItem('manjii_role') || 'customer';
         document.getElementById('balanceArea').style.display = 'block';
-        document.getElementById('roleTag').innerText = curRole.toUpperCase() + " PANEL";
-        renderList();
+        document.getElementById('roleLabel').innerText = role.toUpperCase() + " PANEL";
+        render();
         showSec('prodSec');
     }
 
-    function renderList() {
+    function render() {
         const list = document.getElementById('plist');
         list.innerHTML = '';
-        db[curRole].forEach(i => {
+        data[role].forEach(item => {
             const div = document.createElement('div');
             div.className = 'product-item';
-            div.innerHTML = `<span class="p-name">${i.n}</span><button class="btn-buy" onclick='openBuy(${JSON.stringify(i)})'>BUY NOW</button>`;
+            div.innerHTML = `
+                <div style="font-family:'Orbitron'; font-size:14px;">${item.n}</div>
+                <button class="btn-buy-small" onclick='openOrder(${JSON.stringify(item)})'>BUY NOW</button>
+            `;
             list.appendChild(div);
         });
     }
 
-    function openBuy(item) {
-        selectedItem = item;
+    function openOrder(item) {
+        selected = item;
         document.getElementById('selName').innerText = item.n;
-        const kArea = document.getElementById('keyOptions');
+        const kBox = document.getElementById('keyBox');
         
-        if(item.isKey) {
-            kArea.style.display = 'block';
-            const sel = document.getElementById('keySelect');
-            sel.innerHTML = '';
-            for(let d in keys[curRole]) {
-                sel.innerHTML += `<option value="${keys[curRole][d]}">${d}</option>`;
+        if(item.isK) {
+            kBox.style.display = 'block';
+            const s = document.getElementById('keySel');
+            s.innerHTML = '';
+            for(let d in keyPrices[role]) {
+                s.innerHTML += `<option value="${keyPrices[role][d]}">${d}</option>`;
             }
             updateKeyPrice();
         } else {
-            kArea.style.display = 'none';
-            document.getElementById('priceDisplay').innerText = "Rp " + item.p.toLocaleString();
-            selectedItem.finalP = item.p;
+            kBox.style.display = 'none';
+            document.getElementById('selPrice').innerText = "Rp " + item.p.toLocaleString();
+            selected.final = item.p;
         }
         showSec('buySec');
     }
 
     function updateKeyPrice() {
-        const p = parseInt(document.getElementById('keySelect').value);
-        document.getElementById('priceDisplay').innerText = "Rp " + p.toLocaleString();
-        selectedItem.finalP = p;
+        const p = parseInt(document.getElementById('keySel').value);
+        document.getElementById('selPrice').innerText = "Rp " + p.toLocaleString();
+        selected.final = p;
     }
 
     function toReview() {
         const t = document.getElementById('tg').value;
-        if(!t) return alert("Isi Telegram!");
-        const d = document.getElementById('revDetail');
-        d.innerHTML = `PRODUK: ${selectedItem.n}<br>HARGA: Rp ${selectedItem.finalP.toLocaleString()}<br>TELEGRAM: ${t}<br>CATATAN: ${document.getElementById('note').value || '-'}`;
+        if(!t) return alert("Isi Username Telegram!");
+        document.getElementById('revInfo').innerHTML = `
+            PRODUK: ${selected.n}<br>
+            HARGA: Rp ${selected.final.toLocaleString()}<br>
+            TELEGRAM: ${t}<br>
+            METODE: SALDO WEBSITE
+        `;
         showSec('revSec');
     }
 
-    function payNow() {
-        if(balance < selectedItem.finalP) return alert("Saldo Rp 0! Hubungi Admin.");
-        document.getElementById('loading').style.display = 'flex';
+    function doPay() {
+        if(balance < selected.final) return alert("Saldo Rp 0! Hubungi Admin.");
+        document.getElementById('loadingOverlay').style.display = 'flex';
         setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('trxId').innerText = "#MJ_" + Math.random().toString(36).substr(2, 8).toUpperCase();
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('trx').innerText = "#MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
             showSec('pendSec');
         }, 3500);
     }
 
-    function logout() {
-        localStorage.removeItem('loggedUser');
-        location.reload();
-    }
+    function logout() { localStorage.removeItem('manjii_user'); location.reload(); }
 
-    // Tab Logic
+    // TAB LOGIC
     document.getElementById('tabCus').onclick = () => {
-        curRole = 'customer';
-        document.getElementById('regArea').style.display = 'block';
+        role = 'customer';
+        document.getElementById('regText').style.display = 'block';
         document.getElementById('tabCus').style.borderColor = 'var(--accent)';
         document.getElementById('tabRes').style.borderColor = '#333';
     };
     document.getElementById('tabRes').onclick = () => {
-        curRole = 'reseller';
-        document.getElementById('regArea').style.display = 'none';
+        role = 'reseller';
+        document.getElementById('regText').style.display = 'none';
         document.getElementById('tabRes').style.borderColor = 'var(--purple)';
         document.getElementById('tabCus').style.borderColor = '#333';
     };
 
-    // Auto Login Check
-    if(curUser) initApp();
+    if(user) startApp();
 </script>
+
 </body>
 </html>
