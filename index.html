@@ -8,356 +8,358 @@
     <style>
         :root {
             --accent: #00d2ff;
-            --neon-purple: #9d50bb;
-            --bg-dark: #050608;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --neon-shadow: 0 0 20px rgba(0, 210, 255, 0.6), 0 0 40px rgba(0, 210, 255, 0.3);
+            --purple: #9d50bb;
+            --glow: 0 0 20px rgba(0, 210, 255, 0.8), 0 0 40px rgba(0, 210, 255, 0.4);
+            --text-glow: 0 0 10px rgba(0, 210, 255, 1), 0 0 20px rgba(0, 210, 255, 0.5);
         }
 
         body {
             margin: 0; padding: 0;
-            background: radial-gradient(circle at top right, #1a1b26 0%, #050608 100%);
-            background-attachment: fixed;
-            font-family: 'Rajdhani', sans-serif;
-            color: white;
-            display: flex; justify-content: center;
-            min-height: 100vh; overflow-x: hidden;
+            background: #050608;
+            background-image: radial-gradient(circle at top right, #1a1b26 0%, #050608 100%);
+            color: white; font-family: 'Rajdhani', sans-serif;
+            display: flex; justify-content: center; min-height: 100vh;
         }
 
-        /* Nav & Balance */
+        /* Navbar & Saldo */
         .navbar {
             position: fixed; top: 0; width: 100%; max-width: 500px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; box-sizing: border-box; z-index: 100;
-            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
+            padding: 20px; box-sizing: border-box; z-index: 100;
+            backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .balance-pill {
+        .balance-box {
             background: rgba(0, 210, 255, 0.1);
             border: 1px solid var(--accent);
-            padding: 6px 15px; border-radius: 50px;
+            padding: 8px 15px; border-radius: 50px;
             font-family: 'Orbitron'; font-size: 11px;
-            box-shadow: var(--neon-shadow);
-            display: none;
+            box-shadow: var(--glow); display: none;
+            animation: pulseGlow 2s infinite;
         }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: var(--glow); } 50% { box-shadow: 0 0 30px var(--accent); } }
 
         .container { width: 100%; max-width: 480px; padding: 100px 20px 40px; box-sizing: border-box; }
 
-        /* Neon Branding */
-        .logo-box {
-            width: 80px; height: 80px; margin: 0 auto 20px;
-            background: linear-gradient(45deg, var(--accent), var(--neon-purple));
-            border-radius: 22px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 50px rgba(0, 210, 255, 0.6); font-size: 40px;
+        /* Branding */
+        .brand { text-align: center; margin-bottom: 40px; }
+        .logo {
+            width: 80px; height: 80px; margin: 0 auto 15px;
+            background: linear-gradient(45deg, var(--accent), var(--purple));
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 50px var(--accent); font-size: 40px;
         }
         h1 { 
-            font-family: 'Orbitron'; font-size: 28px; letter-spacing: 6px; 
-            text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
-            text-align: center; margin: 0;
+            font-family: 'Orbitron'; font-size: 28px; letter-spacing: 5px; 
+            text-shadow: var(--text-glow); margin: 0;
         }
 
         /* Galaxy Card */
-        .galaxy-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 28px; padding: 30px; margin-bottom: 25px;
-            backdrop-filter: blur(25px);
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px; padding: 30px;
+            backdrop-filter: blur(30px);
         }
 
+        /* Inputs */
         .input-box {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            padding: 18px; border-radius: 16px; color: white; width: 100%;
-            margin-top: 10px; box-sizing: border-box; font-family: 'Rajdhani';
-            transition: 0.3s;
+            width: 100%; padding: 18px; margin-top: 10px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; color: white; box-sizing: border-box;
+            font-family: 'Rajdhani'; font-size: 16px; transition: 0.3s;
         }
-        .input-box:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+        .input-box:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent); outline: none; }
 
-        /* High Glow Buttons */
+        /* Super Neon Buttons */
         .btn-neon {
             width: 100%; padding: 18px; border-radius: 18px;
-            border: none; cursor: pointer; font-weight: bold;
-            font-family: 'Orbitron'; font-size: 13px; letter-spacing: 2px;
+            border: none; cursor: pointer; font-family: 'Orbitron';
+            font-size: 13px; letter-spacing: 2px; font-weight: bold;
             transition: 0.4s; margin-top: 15px;
-            background: #111; color: white;
+            background: #000; color: #fff;
             border-bottom: 4px solid var(--accent);
-            text-shadow: 0 0 5px white;
+            text-shadow: 0 0 10px #fff;
         }
         .btn-neon:hover { 
             transform: translateY(-5px); 
-            box-shadow: 0 0 30px var(--accent);
+            box-shadow: 0 0 40px var(--accent);
             border-bottom: 4px solid #fff;
         }
 
-        /* Product Styles */
+        /* Product List */
         .product-item {
             display: flex; align-items: center; justify-content: space-between;
             background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px;
-            border: 1px solid var(--border); cursor: pointer; margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;
         }
-        .product-item:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,210,255,0.2); }
-        .p-price { color: #00ff88; font-family: 'Orbitron'; text-shadow: 0 0 10px #00ff88; }
+        .p-name { font-family: 'Orbitron'; font-size: 14px; text-shadow: 0 0 5px var(--accent); }
+        .btn-buy {
+            background: var(--accent); color: black; border: none;
+            padding: 8px 15px; border-radius: 10px; font-family: 'Orbitron';
+            font-size: 10px; cursor: pointer; box-shadow: 0 0 15px var(--accent);
+        }
 
         /* Loading Overlay */
-        #loadingOverlay {
+        #loading {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 6, 8, 0.98); z-index: 1000;
+            background: rgba(5,6,8,0.98); z-index: 1000;
             display: none; flex-direction: column; align-items: center; justify-content: center;
         }
-        .spinner {
-            width: 70px; height: 70px; border: 5px solid var(--border);
+        .loader {
+            width: 60px; height: 60px; border: 5px solid rgba(0,210,255,0.1);
             border-top: 5px solid var(--accent); border-radius: 50%;
             animation: spin 1s linear infinite; box-shadow: 0 0 20px var(--accent);
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .section { display: none; }
-        .active { display: block; animation: zoomIn 0.4s ease; }
-        @keyframes zoomIn { from { opacity:0; transform: scale(0.9); } to { opacity:1; transform: scale(1); } }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="navbar">
-    <div style="font-family: 'Orbitron'; color: var(--accent); text-shadow: 0 0 10px var(--accent);">⚡ M-iOS</div>
-    <div class="balance-pill" id="balanceArea">💰 Rp <span id="balanceVal">0</span></div>
+    <div style="font-family: 'Orbitron'; color: var(--accent); text-shadow: var(--text-glow);">⚡ M-iOS</div>
+    <div class="balance-box" id="balanceArea">💰 RP <span id="balVal">0</span></div>
 </div>
 
-<div id="loadingOverlay">
-    <div class="spinner"></div>
-    <h3 style="font-family: 'Orbitron'; color: var(--accent); text-shadow: 0 0 15px var(--accent);">VERIFYING TRANSACTION...</h3>
+<div id="loading">
+    <div class="loader"></div>
+    <h3 style="font-family: 'Orbitron'; margin-top: 20px; color: var(--accent); text-shadow: var(--text-glow);">VERIFYING...</h3>
 </div>
 
 <div class="container">
     <div id="loginSec" class="section active">
-        <div class="logo-box">🚀</div>
-        <h1>MANJII iOS</h1>
-        <div class="galaxy-card" style="margin-top: 30px;">
+        <div class="brand">
+            <div class="logo">🚀</div>
+            <h1>MANJII iOS</h1>
+        </div>
+        <div class="card">
             <div style="display: flex; gap: 10px; margin-bottom: 25px;">
                 <button class="btn-neon" style="margin:0; flex:1;" id="tabCus">CUSTOMER</button>
-                <button class="btn-neon" style="margin:0; flex:1; border-bottom-color: var(--neon-purple);" id="tabRes">RESELLER</button>
+                <button class="btn-neon" style="margin:0; flex:1; border-color: var(--purple);" id="tabRes">RESELLER</button>
             </div>
-            <input type="text" id="logUser" class="input-box" placeholder="USERNAME">
-            <input type="password" id="logPass" class="input-box" placeholder="PASSWORD">
-            <button class="btn-neon" onclick="tryLogin()" style="background: var(--accent); color: black;">MASUK SISTEM ➔</button>
-            <p id="regPrompt" style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
-                Belum punya akun? <a href="javascript:void(0)" onclick="showSection('regSec')" style="color: var(--accent);">Daftar Sekarang</a>
+            <input type="text" id="logU" class="input-box" placeholder="USERNAME">
+            <input type="password" id="logP" class="input-box" placeholder="PASSWORD">
+            <button class="btn-neon" onclick="tryLogin()" style="background: var(--accent); color: black;">MASUK SISTEM</button>
+            <p id="regArea" style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
+                Belum punya akun? <a href="javascript:void(0)" onclick="showSec('regSec')" style="color: var(--accent);">Daftar</a>
             </p>
         </div>
     </div>
 
     <div id="regSec" class="section">
-        <h1>DAFTAR AKUN</h1>
-        <div class="galaxy-card" style="margin-top: 20px;">
-            <input type="text" id="regUser" class="input-box" placeholder="USERNAME BARU">
-            <input type="password" id="regPass" class="input-box" placeholder="PASSWORD BARU">
-            <button class="btn-neon" onclick="handleRegister()" style="background: var(--neon-purple);">BUAT AKUN 🚀</button>
-            <button onclick="showSection('loginSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">⬅ KEMBALI</button>
+        <h1>DAFTAR</h1>
+        <div class="card">
+            <input type="text" id="regU" class="input-box" placeholder="USERNAME BARU">
+            <input type="password" id="regP" class="input-box" placeholder="PASSWORD BARU">
+            <button class="btn-neon" onclick="doRegister()" style="background: var(--purple);">DAFTAR SEKARANG</button>
+            <button onclick="showSec('loginSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">⬅ KEMBALI</button>
         </div>
     </div>
 
-    <div id="productSec" class="section">
-        <div class="galaxy-card">
-            <h3 id="roleTag" style="font-family: 'Orbitron'; color: var(--accent);">CUSTOMER PANEL</h3>
-            <div id="productList"></div>
+    <div id="prodSec" class="section">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 id="roleTag" style="font-family: 'Orbitron'; color: var(--accent); margin:0;">PANEL</h3>
+                <button onclick="logout()" style="background:none; border:none; color:red; font-size:12px; cursor:pointer;">LOGOUT</button>
+            </div>
+            <div id="plist"></div>
         </div>
     </div>
 
-    <div id="checkoutSec" class="section">
-        <div class="galaxy-card">
-            <h2 id="pName" style="font-family: 'Orbitron'; margin: 0;">-</h2>
-            <h3 id="pPrice" style="color: #00ff88; margin-top: 5px;">Rp 0</h3>
-            <hr style="border:0; border-top:1px solid var(--border); margin: 20px 0;">
+    <div id="buySec" class="section">
+        <div class="card">
+            <h2 id="selName" style="font-family: 'Orbitron'; margin:0;">PRODUK</h2>
+            <div id="priceDisplay" style="color: #00ff88; font-family: 'Orbitron'; font-size: 20px; margin: 10px 0;">Rp 0</div>
+            <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 20px 0;">
             
-            <label style="font-size: 11px; opacity: 0.5;">USERNAME TELEGRAM</label>
-            <input type="text" id="tgUser" class="input-box" placeholder="@username">
-            
-            <label style="font-size: 11px; opacity: 0.5; display:block; margin-top:15px;">METODE PEMBAYARAN</label>
-            <div class="input-box" style="border-color: var(--accent); background: rgba(0,210,255,0.05);">
-                💳 SALDO AKUN WEBSITE
+            <div id="keyOptions" style="display:none; margin-bottom: 20px;">
+                <label style="font-size: 11px; opacity: 0.5;">PILIH DURASI KEY:</label>
+                <select id="keySelect" class="input-box" onchange="updateKeyPrice()">
+                    </select>
             </div>
 
-            <label style="font-size: 11px; opacity: 0.5; display:block; margin-top:15px;">NOTE (CATATAN)</label>
-            <textarea id="note" class="input-box" style="height: 70px;"></textarea>
+            <label style="font-size: 11px; opacity: 0.5;">TELEGRAM USERNAME</label>
+            <input type="text" id="tg" class="input-box" placeholder="@username">
+            <label style="font-size: 11px; opacity: 0.5; margin-top: 15px; display:block;">NOTE (CATATAN)</label>
+            <textarea id="note" class="input-box" style="height: 60px;"></textarea>
 
-            <button class="btn-neon" onclick="showReview()" style="background: var(--accent); color: black;">CEK STATUS FORMAT ORDER</button>
+            <button class="btn-neon" onclick="toReview()" style="background: var(--accent); color: black;">CEK STATUS FORMAT</button>
+            <button onclick="showSec('prodSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">⬅ KEMBALI</button>
         </div>
     </div>
 
-    <div id="reviewSec" class="section">
-        <div class="galaxy-card">
-            <h3 style="font-family: 'Orbitron'; text-align: center;">DETAIL PEMBELIAN</h3>
-            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; font-size: 14px; line-height: 2;">
-                📦 PRODUK: <span id="revP" style="color:var(--accent)">-</span><br>
-                💰 HARGA: <span id="revH" style="color:#00ff88">-</span><br>
-                📱 TELEGRAM: <span id="revT" style="color:var(--accent)">-</span><br>
-                📝 NOTE: <span id="revN">-</span>
-            </div>
-            <button class="btn-neon" onclick="processPayment()" style="background: #00ff88; color: black;">KONFIRMASI PEMBAYARAN ➔</button>
-            <button onclick="showSection('productSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">BATAL</button>
+    <div id="revSec" class="section">
+        <div class="card">
+            <h3 style="font-family: 'Orbitron'; text-align: center;">KONFIRMASI</h3>
+            <div id="revDetail" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; font-size: 14px; line-height: 2;"></div>
+            <button class="btn-neon" onclick="payNow()" style="background: #00ff88; color: black;">BAYAR SEKARANG</button>
+            <button onclick="showSec('buySec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">BATAL</button>
         </div>
     </div>
 
-    <div id="pendingSec" class="section">
-        <div class="galaxy-card" style="text-align: center; border-color: orange;">
+    <div id="pendSec" class="section">
+        <div class="card" style="text-align: center; border-color: orange;">
             <div style="font-size: 50px;">⏳</div>
-            <h3 style="font-family: 'Orbitron'; color: orange; text-shadow: 0 0 10px orange;">ORDER PENDING</h3>
-            <div style="background: #111; padding: 15px; border-radius: 12px; font-family: monospace; margin: 15px 0; color: var(--accent);" id="trxId">#CO_9C2401B15E</div>
-            <p style="font-size: 12px; opacity: 0.6;">Pesanan Anda sedang diproses. Produk akan dikirimkan otomatis ke Telegram Anda oleh Bot.</p>
-            <button class="btn-neon" onclick="location.reload()">FINISH</button>
+            <h3 style="font-family: 'Orbitron'; color: orange;">ORDER PENDING</h3>
+            <div id="trxId" style="background:#111; padding:15px; border-radius:12px; font-family:monospace; margin:15px 0; color:var(--accent);">#MJ_XXX</div>
+            <p style="font-size:12px; opacity:0.6;">Pesanan sedang diverifikasi admin. Produk dikirim otomatis ke Telegram.</p>
+            <button class="btn-neon" onclick="showSec('prodSec')">BELI LAGI</button>
         </div>
     </div>
 </div>
 
 <script>
-    // DATABASE SIMULASI
-    let usersDB = {
-        "admin_manjii": "manjii123" // Contoh akun admin
-    };
-    let resellersDB = {
-        "reseller_vip": "vip777" // Hanya admin yang bisa tambah ini di script
-    };
-    
-    let currentRole = 'customer';
-    let currentUser = null;
+    // SISTEM PENYIMPANAN PERMANEN (Local Storage)
+    if(!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify({"admin":"123"}));
+    if(!localStorage.getItem('resellers')) localStorage.setItem('resellers', JSON.stringify({"reseller_vip":"vip777"}));
+
+    let curRole = 'customer';
+    let curUser = localStorage.getItem('loggedUser') || null;
     let balance = 0;
     let selectedItem = null;
 
-    // DATA PRODUK SESUAI PERINTAH
-    const products = {
+    const db = {
         customer: [
-            { n: "PANEL iOS", p: 350000 },
-            { n: "INJECTOR iOS/ANDRO", p: 250000 },
-            { n: "CHEAT iOS", p: 250000 },
-            { n: "GBOX 1 TAHUN", p: 150000 },
-            { n: "ESIGN 1 TAHUN", p: 150000 },
-            { n: "KEY 1 DAY", p: 25000 },
-            { n: "KEY 7 DAY", p: 50000 },
-            { n: "KEY 30 DAY", p: 70000 },
-            { n: "KEY 90 DAY", p: 100000 },
-            { n: "KEY 180 DAY", p: 140000 },
-            { n: "KEY 218 DAY", p: 160000 }
+            {n:"PANEL iOS", p:350000},
+            {n:"INJECTOR iOS/ANDRO", isKey:true},
+            {n:"CHEAT iOS", p:250000},
+            {n:"GBOX 1 TAHUN", p:150000},
+            {n:"ESIGN 1 TAHUN", p:150000}
         ],
         reseller: [
-            { n: "PANEL iOS (R)", p: 350000 },
-            { n: "INJECTOR (R)", p: 200000 },
-            { n: "CHEAT iOS (R)", p: 200000 },
-            { n: "GBOX 1 TAHUN (R)", p: 130000 },
-            { n: "ESIGN 1 TAHUN (R)", p: 130000 },
-            { n: "KEY 1 DAY (R)", p: 20000 },
-            { n: "KEY 7 DAY (R)", p: 40000 },
-            { n: "KEY 30 DAY (R)", p: 55000 },
-            { n: "KEY 90 DAY (R)", p: 85000 },
-            { n: "KEY 180 DAY (R)", p: 120000 },
-            { n: "KEY 218 DAY (R)", p: 145000 }
+            {n:"PANEL iOS", p:350000},
+            {n:"INJECTOR iOS/ANDRO", isKey:true},
+            {n:"CHEAT iOS", p:200000},
+            {n:"GBOX 1 TAHUN", p:130000},
+            {n:"ESIGN 1 TAHUN", p:130000}
         ]
     };
 
-    function showSection(id) {
+    const keys = {
+        customer: { "1 DAY":25000, "7 DAY":50000, "30 DAY":70000, "90 DAY":100000, "180 DAY":140000, "218 DAY":160000 },
+        reseller: { "1 DAY":20000, "7 DAY":40000, "30 DAY":55000, "90 DAY":85000, "180 DAY":120000, "218 DAY":145000 }
+    };
+
+    function showSec(id) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        window.scrollTo(0,0);
     }
 
-    // LOGIN LOGIC
+    // AUTH
     function tryLogin() {
-        const u = document.getElementById('logUser').value;
-        const p = document.getElementById('logPass').value;
+        const u = document.getElementById('logU').value;
+        const p = document.getElementById('logP').value;
+        const store = JSON.parse(localStorage.getItem(curRole === 'customer' ? 'users' : 'resellers'));
 
-        if (currentRole === 'customer') {
-            if (usersDB[u] && usersDB[u] === p) {
-                successLogin(u);
-            } else {
-                alert("Akun Customer tidak ditemukan! Silakan daftar dulu.");
-            }
+        if(store[u] && store[u] === p) {
+            curUser = u;
+            localStorage.setItem('loggedUser', u);
+            localStorage.setItem('role', curRole);
+            initApp();
         } else {
-            if (resellersDB[u] && resellersDB[u] === p) {
-                successLogin(u);
-            } else {
-                alert("Akun Reseller tidak terdaftar! Hubungi Admin Manjii iOS.");
-            }
+            alert("Akun tidak valid!");
         }
     }
 
-    function handleRegister() {
-        const u = document.getElementById('regUser').value;
-        const p = document.getElementById('regPass').value;
-        if(u && p) {
-            usersDB[u] = p; // Daftarkan ke DB simulasi
-            alert("Pendaftaran Berhasil! Silakan Login.");
-            showSection('loginSec');
-        } else {
-            alert("Isi data dengan lengkap!");
-        }
+    function doRegister() {
+        const u = document.getElementById('regU').value;
+        const p = document.getElementById('regP').value;
+        if(!u || !p) return alert("Isi data!");
+        let users = JSON.parse(localStorage.getItem('users'));
+        users[u] = p;
+        localStorage.setItem('users', JSON.stringify(users));
+        alert("Berhasil Daftar! Silakan Login.");
+        showSec('loginSec');
     }
 
-    function successLogin(user) {
-        currentUser = user;
+    function initApp() {
+        curRole = localStorage.getItem('role') || 'customer';
         document.getElementById('balanceArea').style.display = 'block';
-        document.getElementById('roleTag').innerText = currentRole.toUpperCase() + " PANEL";
-        renderProducts();
-        showSection('productSec');
+        document.getElementById('roleTag').innerText = curRole.toUpperCase() + " PANEL";
+        renderList();
+        showSec('prodSec');
     }
 
-    function renderProducts() {
-        const list = document.getElementById('productList');
+    function renderList() {
+        const list = document.getElementById('plist');
         list.innerHTML = '';
-        products[currentRole].forEach(item => {
+        db[curRole].forEach(i => {
             const div = document.createElement('div');
             div.className = 'product-item';
-            div.onclick = () => { selectedItem = item; openCheckout(); };
-            div.innerHTML = `
-                <div><b>${item.n}</b><br><small style="opacity:0.5">Premium Mod</small></div>
-                <div class="p-price">Rp ${item.p.toLocaleString()}</div>
-            `;
+            div.innerHTML = `<span class="p-name">${i.n}</span><button class="btn-buy" onclick='openBuy(${JSON.stringify(i)})'>BUY NOW</button>`;
             list.appendChild(div);
         });
     }
 
-    function openCheckout() {
-        document.getElementById('pName').innerText = selectedItem.n;
-        document.getElementById('pPrice').innerText = "Rp " + selectedItem.p.toLocaleString();
-        showSection('checkoutSec');
-    }
-
-    function showReview() {
-        const tg = document.getElementById('tgUser').value;
-        if(!tg) return alert("Isi Username Telegram!");
-        document.getElementById('revP').innerText = selectedItem.n;
-        document.getElementById('revH').innerText = "Rp " + selectedItem.p.toLocaleString();
-        document.getElementById('revT').innerText = tg;
-        document.getElementById('revN').innerText = document.getElementById('note').value || "-";
-        showSection('reviewSec');
-    }
-
-    function processPayment() {
-        if (balance < selectedItem.p) {
-            alert("Saldo Rp 0! Hubungi Admin untuk Top Up.");
-            return;
+    function openBuy(item) {
+        selectedItem = item;
+        document.getElementById('selName').innerText = item.n;
+        const kArea = document.getElementById('keyOptions');
+        
+        if(item.isKey) {
+            kArea.style.display = 'block';
+            const sel = document.getElementById('keySelect');
+            sel.innerHTML = '';
+            for(let d in keys[curRole]) {
+                sel.innerHTML += `<option value="${keys[curRole][d]}">${d}</option>`;
+            }
+            updateKeyPrice();
+        } else {
+            kArea.style.display = 'none';
+            document.getElementById('priceDisplay').innerText = "Rp " + item.p.toLocaleString();
+            selectedItem.finalP = item.p;
         }
-        document.getElementById('loadingOverlay').style.display = 'flex';
-        setTimeout(() => {
-            balance -= selectedItem.p;
-            document.getElementById('balanceVal').innerText = balance.toLocaleString();
-            document.getElementById('loadingOverlay').style.display = 'none';
-            document.getElementById('trxId').innerText = "#MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-            showSection('pendingSec');
-        }, 4000); // Loading lebih lama agar nyata
+        showSec('buySec');
     }
 
-    // Tab Handling
+    function updateKeyPrice() {
+        const p = parseInt(document.getElementById('keySelect').value);
+        document.getElementById('priceDisplay').innerText = "Rp " + p.toLocaleString();
+        selectedItem.finalP = p;
+    }
+
+    function toReview() {
+        const t = document.getElementById('tg').value;
+        if(!t) return alert("Isi Telegram!");
+        const d = document.getElementById('revDetail');
+        d.innerHTML = `PRODUK: ${selectedItem.n}<br>HARGA: Rp ${selectedItem.finalP.toLocaleString()}<br>TELEGRAM: ${t}<br>CATATAN: ${document.getElementById('note').value || '-'}`;
+        showSec('revSec');
+    }
+
+    function payNow() {
+        if(balance < selectedItem.finalP) return alert("Saldo Rp 0! Hubungi Admin.");
+        document.getElementById('loading').style.display = 'flex';
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('trxId').innerText = "#MJ_" + Math.random().toString(36).substr(2, 8).toUpperCase();
+            showSec('pendSec');
+        }, 3500);
+    }
+
+    function logout() {
+        localStorage.removeItem('loggedUser');
+        location.reload();
+    }
+
+    // Tab Logic
     document.getElementById('tabCus').onclick = () => {
-        currentRole = 'customer';
-        document.getElementById('regPrompt').style.display = 'block';
-        document.getElementById('tabCus').style.borderBottomColor = 'var(--accent)';
-        document.getElementById('tabRes').style.borderBottomColor = '#333';
+        curRole = 'customer';
+        document.getElementById('regArea').style.display = 'block';
+        document.getElementById('tabCus').style.borderColor = 'var(--accent)';
+        document.getElementById('tabRes').style.borderColor = '#333';
     };
     document.getElementById('tabRes').onclick = () => {
-        currentRole = 'reseller';
-        document.getElementById('regPrompt').style.display = 'none';
-        document.getElementById('tabRes').style.borderBottomColor = 'var(--accent)';
-        document.getElementById('tabCus').style.borderBottomColor = '#333';
+        curRole = 'reseller';
+        document.getElementById('regArea').style.display = 'none';
+        document.getElementById('tabRes').style.borderColor = 'var(--purple)';
+        document.getElementById('tabCus').style.borderColor = '#333';
     };
+
+    // Auto Login Check
+    if(curUser) initApp();
 </script>
 </body>
 </html>
