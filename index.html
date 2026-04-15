@@ -37,7 +37,6 @@
 
         .container { width: 100%; max-width: 480px; padding: 100px 20px 40px; box-sizing: border-box; }
 
-        /* Branding */
         .logo-box {
             width: 80px; height: 80px; margin: 0 auto 15px;
             background: linear-gradient(45deg, var(--accent), var(--purple));
@@ -46,7 +45,6 @@
         }
         h1 { font-family: 'Orbitron'; font-size: 28px; letter-spacing: 5px; text-shadow: var(--text-glow); text-align: center; margin: 0; }
 
-        /* Galaxy Cards */
         .galaxy-card {
             background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 28px; padding: 30px; margin-bottom: 25px; backdrop-filter: blur(30px);
@@ -59,7 +57,6 @@
         }
         .input-box:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 20px var(--accent); }
 
-        /* Buttons */
         .btn-neon {
             width: 100%; padding: 18px; border-radius: 18px; border: none; cursor: pointer;
             font-family: 'Orbitron'; font-size: 13px; letter-spacing: 2px; font-weight: bold;
@@ -68,7 +65,6 @@
         }
         .btn-neon:hover { transform: translateY(-5px); box-shadow: 0 0 40px var(--accent); border-bottom: 4px solid #fff; }
 
-        /* Product List */
         .product-item {
             background: rgba(255,255,255,0.03); padding: 20px; border-radius: 22px;
             border: 1px solid rgba(255,255,255,0.1); margin-bottom: 18px;
@@ -83,7 +79,6 @@
             font-size: 11px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px var(--accent);
         }
 
-        /* Loading Overlay */
         #loadingOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(5,6,8,0.98); z-index: 1000;
@@ -100,7 +95,6 @@
         .active { display: block; animation: zoomIn 0.4s ease forwards; }
         @keyframes zoomIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
 
-        /* Highlight Text */
         .label-blue { color: var(--accent); font-weight: bold; }
         .label-green { color: #00ff88; font-weight: bold; }
         .guide-box { background: rgba(0, 210, 255, 0.05); border: 1px dashed var(--accent); padding: 15px; border-radius: 12px; font-size: 12px; margin-bottom: 20px; color: #ccc; }
@@ -109,13 +103,13 @@
 <body>
 
 <div class="navbar">
-    <div style="font-family: 'Orbitron'; color: var(--accent); text-shadow: var(--text-glow);">⚡ MANJII iOS</div>
+    <div style="font-family: 'Orbitron'; color: var(--accent); text-shadow: var(--text-glow);">⚡ M-iOS</div>
     <div class="balance-pill" id="balanceArea">💰 Rp <span id="balVal">0</span></div>
 </div>
 
 <div id="loadingOverlay">
     <div class="loader"></div>
-    <h3 style="font-family: 'Orbitron'; color: var(--accent); margin-top: 20px; text-shadow: var(--text-glow);">PROCESSING...</h3>
+    <h3 style="font-family: 'Orbitron'; color: var(--accent); margin-top: 20px; text-shadow: var(--text-glow);">CONNECTING SYSTEM...</h3>
 </div>
 
 <div class="container">
@@ -130,19 +124,9 @@
             <input type="text" id="logU" class="input-box" placeholder="USERNAME">
             <input type="password" id="logP" class="input-box" placeholder="PASSWORD">
             <button class="btn-neon" onclick="tryLogin()" style="background: var(--accent); color: black;">LOGIN SYSTEM ➔</button>
-            <p id="regText" style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
-                Belum punya akun? <a href="javascript:void(0)" onclick="showSec('regSec')" style="color: var(--accent); text-decoration: none;">Daftar Sekarang</a>
+            <p style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
+                Hubungi Admin untuk pendaftaran akun.
             </p>
-        </div>
-    </div>
-
-    <div id="regSec" class="section">
-        <h1>REGISTRATION</h1>
-        <div class="galaxy-card" style="margin-top: 20px;">
-            <input type="text" id="regU" class="input-box" placeholder="BUAT USERNAME">
-            <input type="password" id="regP" class="input-box" placeholder="BUAT PASSWORD">
-            <button class="btn-neon" onclick="doRegister()" style="background: var(--purple);">DAFTAR AKUN</button>
-            <button onclick="showSec('loginSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5; cursor:pointer;">⬅ KEMBALI KE LOGIN</button>
         </div>
     </div>
 
@@ -163,10 +147,9 @@
             
             <div class="guide-box">
                 <b>PANDUAN PEMBELIAN:</b><br>
-                1. Masukkan Username Telegram Anda dengan benar.<br>
-                2. Pastikan Saldo Website mencukupi.<br>
-                3. Klik Cek Format untuk memverifikasi pesanan.<br>
-                4. Produk akan dikirim via bot setelah admin approve.
+                1. Saldo akan otomatis terpotong saat klik Bayar.<br>
+                2. Admin akan menerima notifikasi otomatis.<br>
+                3. Lisensi dikirimkan via Bot Telegram Anda.
             </div>
 
             <div id="keyBox" style="display:none; margin-bottom: 20px;">
@@ -178,7 +161,7 @@
             <input type="text" id="tg" class="input-box" placeholder="@user_manjii">
             
             <label style="font-size: 11px; opacity: 0.5; display:block; margin-top:15px;">NOTE / CATATAN KHUSUS</label>
-            <textarea id="note" class="input-box" style="height: 80px;" placeholder="Contoh: Tolong proses cepat admin..."></textarea>
+            <textarea id="note" class="input-box" style="height: 80px;" placeholder="Tulis catatan jika perlu..."></textarea>
 
             <button class="btn-neon" onclick="toReview()" style="background: var(--accent); color: black;">CEK FORMAT PEMBELIAN</button>
             <button onclick="showSec('prodSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5; cursor:pointer;">⬅ KEMBALI</button>
@@ -189,7 +172,7 @@
         <div class="galaxy-card">
             <h3 style="font-family: 'Orbitron'; text-align: center; letter-spacing: 2px;">CONFIRMATION</h3>
             <div id="revInfo" style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 18px; font-size: 15px; line-height: 2.2; border: 1px solid rgba(255,255,255,0.05);">
-                </div>
+            </div>
             <button class="btn-neon" onclick="doPay()" style="background: #00ff88; color: black; margin-top: 25px;">KONFIRMASI & BAYAR</button>
             <button onclick="showSec('buySec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5; cursor:pointer;">REVISI DATA</button>
         </div>
@@ -198,17 +181,17 @@
     <div id="pendSec" class="section">
         <div class="galaxy-card" style="text-align: center; border-color: orange;">
             <div style="font-size: 55px; filter: drop-shadow(0 0 15px orange);">⏳</div>
-            <h3 style="font-family: 'Orbitron'; color: orange; text-shadow: 0 0 15px orange; margin-top:15px;">ORDER PENDING</h3>
+            <h3 style="font-family: 'Orbitron'; color: orange; text-shadow: 0 0 15px orange; margin-top:15px;">ORDER DIPROSES</h3>
             <div id="trx" style="background:#000; padding:18px; border-radius:14px; font-family:monospace; margin:20px 0; color:var(--accent); border: 1px solid var(--accent); font-size:16px;">#MJ_XXX</div>
-            <p style="font-size: 13px; opacity: 0.7; line-height: 1.6;">Pesanan Anda sedang dalam antrean verifikasi Admin Manjii iOS. Mohon tunggu instruksi selanjutnya di Telegram Anda.</p>
-            <button class="btn-neon" onclick="showSec('prodSec')">LANJUT BELANJA</button>
+            <p style="font-size: 13px; opacity: 0.7;">Saldo telah terpotong. Silakan cek Bot Telegram MANJII iOS secara berkala.</p>
+            <button class="btn-neon" onclick="showSec('prodSec')">BELANJA LAGI</button>
         </div>
     </div>
 </div>
 
 <script>
-    if(!localStorage.getItem('u_db')) localStorage.setItem('u_db', JSON.stringify({"admin":"manjii123"}));
-    if(!localStorage.getItem('r_db')) localStorage.setItem('r_db', JSON.stringify({"reseller_vip":"vip777"}));
+    // GANTI IP INI DENGAN IP VPS / DOMAIN KAMU JIKA SUDAH ONLINE
+    const API_URL = "http://localhost:3000"; 
 
     let role = 'customer';
     let user = localStorage.getItem('manjii_user') || null;
@@ -217,24 +200,24 @@
 
     const data = {
         customer: [
-            {n:"PANEL iOS", d:"Optimalkan performa iPhone hingga titik maksimal. Anti-lag & Full Smooth.", p:350000},
-            {n:"INJECTOR iOS/ANDRO", d:"Gunakan lisensi injector untuk mengaktifkan fitur premium bypass.", isK:true},
-            {n:"CHEAT iOS", d:"Akses fitur cheat premium paling aman dengan sistem anti-ban terbaru.", p:250000},
-            {n:"GBOX 1 TAHUN", d:"Instalasi aplikasi pihak ketiga tanpa revoke selama 1 tahun penuh.", p:150000},
-            {n:"ESIGN 1 TAHUN", d:"Sertifikat instalasi IPA mandiri paling stabil untuk para gamer.", p:150000}
+            {n:"PANEL iOS", d:"Optimalkan performa iPhone hingga titik maksimal.", p:350000},
+            {n:"INJECTOR iOS/ANDRO", d:"Gunakan lisensi injector premium bypass.", isK:true},
+            {n:"CHEAT iOS", d:"Akses fitur cheat paling aman anti-ban.", p:250000},
+            {n:"GBOX 1 TAHUN", d:"Instalasi aplikasi pihak ketiga tanpa revoke.", p:150000},
+            {n:"ESIGN 1 TAHUN", d:"Sertifikat instalasi IPA mandiri stabil.", p:150000}
         ],
         reseller: [
-            {n:"PANEL iOS", d:"Harga khusus reseller untuk optimasi perangkat iOS.", p:350000},
-            {n:"INJECTOR iOS/ANDRO", d:"Lisensi injector dengan harga grosir untuk reseller aktif.", isK:true},
-            {n:"CHEAT iOS", d:"Akses cheat premium satuan dengan potongan harga reseller.", p:200000},
-            {n:"GBOX 1 TAHUN", d:"Sertifikat Gbox durasi 1 tahun untuk stok reseller.", p:130000},
-            {n:"ESIGN 1 TAHUN", d:"Sertifikat Esign durasi 1 tahun harga termurah.", p:130000}
+            {n:"PANEL iOS", d:"Harga reseller untuk optimasi perangkat iOS.", p:350000},
+            {n:"INJECTOR iOS/ANDRO", d:"Grosir lisensi injector reseller aktif.", isK:true},
+            {n:"CHEAT iOS", d:"Cheat premium satuan potongan reseller.", p:200000},
+            {n:"GBOX 1 TAHUN", d:"Sertifikat Gbox stok reseller.", p:130000},
+            {n:"ESIGN 1 TAHUN", d:"Esign harga termurah reseller.", p:130000}
         ]
     };
 
     const keyPrices = {
-        customer: { "1 DAY":25000, "7 DAY":50000, "30 DAY":70000, "90 DAY":100000, "180 DAY":140000, "218 DAY":160000 },
-        reseller: { "1 DAY":20000, "7 DAY":40000, "30 DAY":55000, "90 DAY":85000, "180 DAY":120000, "218 DAY":145000 }
+        customer: { "1 DAY":25000, "7 DAY":50000, "30 DAY":70000, "90 DAY":100000 },
+        reseller: { "1 DAY":20000, "7 DAY":40000, "30 DAY":55000, "90 DAY":85000 }
     };
 
     function showSec(id) {
@@ -244,40 +227,34 @@
     }
 
     async function tryLogin() {
-    const u = document.getElementById('logU').value;
-    const p = document.getElementById('logP').value;
-    
-    const response = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role: role === 'customer' ? 'cus' : 'res', username: u, password: p })
-    });
-    
-    const res = await response.json();
-    if(res.success) {
-        user = u;
-        balance = res.balance;
-        document.getElementById('balVal').innerText = balance.toLocaleString();
-        localStorage.setItem('manjii_user', u);
-        localStorage.setItem('manjii_role', role);
-        startApp();
-    } else { alert(res.message); }
-}
+        const u = document.getElementById('logU').value;
+        const p = document.getElementById('logP').value;
+        if(!u || !p) return alert("Isi lengkap!");
 
-    function doRegister() {
-        const u = document.getElementById('regU').value;
-        const p = document.getElementById('regP').value;
-        if(!u || !p) return alert("Isi data!");
-        let db = JSON.parse(localStorage.getItem('u_db'));
-        db[u] = p;
-        localStorage.setItem('u_db', JSON.stringify(db));
-        alert("Berhasil Daftar!");
-        showSec('loginSec');
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        try {
+            const res = await fetch(`${API_URL}/api/login`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ role: role === 'customer' ? 'cus' : 'res', username: u, password: p })
+            });
+            const result = await res.json();
+            
+            if(result.success) {
+                user = u;
+                balance = result.balance;
+                localStorage.setItem('manjii_user', u);
+                localStorage.setItem('manjii_role', role);
+                startApp();
+            } else { alert(result.message); }
+        } catch (e) { alert("Server Bot Offline! Pastikan bot jalan di localhost/VPS."); }
+        document.getElementById('loadingOverlay').style.display = 'none';
     }
 
     function startApp() {
         role = localStorage.getItem('manjii_role') || 'customer';
         document.getElementById('balanceArea').style.display = 'block';
+        document.getElementById('balVal').innerText = balance.toLocaleString();
         document.getElementById('roleLabel').innerText = role.toUpperCase() + " PANEL";
         render();
         showSec('prodSec');
@@ -323,59 +300,55 @@
     }
 
     function toReview() {
-        const t = document.getElementById('tg').value;
-        if(!t) return alert("Isi Telegram!");
+        if(!document.getElementById('tg').value) return alert("Isi Username Telegram!");
         document.getElementById('revInfo').innerHTML = `
             🔹 <span class="label-blue">PRODUK:</span> ${selected.n}<br>
             💰 <span class="label-blue">HARGA:</span> <span class="label-green">Rp ${selected.final.toLocaleString()}</span><br>
-            📱 <span class="label-blue">TELEGRAM:</span> ${t}<br>
-            💳 <span class="label-blue">METODE:</span> SALDO WEBSITE<br>
-            📝 <span class="label-blue">CATATAN:</span> ${document.getElementById('note').value || '-'}
+            📱 <span class="label-blue">TELEGRAM:</span> ${document.getElementById('tg').value}<br>
+            💳 <span class="label-blue">METODE:</span> SALDO WEBSITE
         `;
         showSec('revSec');
     }
 
     async function doPay() {
-    document.getElementById('loadingOverlay').style.display = 'flex';
-    
-    const response = await fetch('http://localhost:3000/api/pay', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            role: role === 'customer' ? 'cus' : 'res', 
-            username: user, 
-            amount: selected.final,
-            product: selected.n
-        })
-    });
-
-    const res = await response.json();
-    document.getElementById('loadingOverlay').style.display = 'none';
-
-    if(res.success) {
-        balance = res.newBalance;
-        document.getElementById('balVal').innerText = balance.toLocaleString();
-        document.getElementById('trx').innerText = "#MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-        showSec('pendSec');
-    } else {
-        alert(res.message);
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        try {
+            const res = await fetch(`${API_URL}/api/pay`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    role: role === 'customer' ? 'cus' : 'res', 
+                    username: user, 
+                    amount: selected.final,
+                    product: selected.n
+                })
+            });
+            const result = await res.json();
+            if(result.success) {
+                balance = result.newBalance;
+                document.getElementById('balVal').innerText = balance.toLocaleString();
+                document.getElementById('trx').innerText = "#MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
+                showSec('pendSec');
+            } else { alert(result.message); }
+        } catch (e) { alert("Koneksi gagal!"); }
+        document.getElementById('loadingOverlay').style.display = 'none';
     }
-}
 
     function logout() { localStorage.removeItem('manjii_user'); location.reload(); }
 
     document.getElementById('tabCus').onclick = () => {
-        role = 'customer'; document.getElementById('regText').style.display = 'block';
+        role = 'customer';
         document.getElementById('tabCus').style.borderColor = 'var(--accent)';
         document.getElementById('tabRes').style.borderColor = '#333';
     };
     document.getElementById('tabRes').onclick = () => {
-        role = 'reseller'; document.getElementById('regText').style.display = 'none';
+        role = 'reseller';
         document.getElementById('tabRes').style.borderColor = 'var(--purple)';
         document.getElementById('tabCus').style.borderColor = '#333';
     };
 
-    if(user) startApp();
+    // Jalankan pengecekan login di awal jika sudah ada session
+    if(user) { tryLogin(); }
 </script>
 
 </body>
