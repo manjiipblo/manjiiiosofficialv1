@@ -8,9 +8,9 @@
     <style>
         :root {
             --accent: #00d2ff;
-            --accent-purple: #9d50bb;
-            --bg: #050608;
-            --glass: rgba(255, 255, 255, 0.02);
+            --neon-purple: #9d50bb;
+            --bg-dark: #050608;
+            --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
         }
 
@@ -24,175 +24,237 @@
             min-height: 100vh; overflow-x: hidden;
         }
 
-        /* Nav Bar / Saldo */
+        /* Nav & Balance Area */
         .navbar {
             position: fixed; top: 0; width: 100%; max-width: 500px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px; box-sizing: border-box; z-index: 100;
-            backdrop-filter: blur(10px);
+            padding: 15px 20px; box-sizing: border-box; z-index: 100;
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
         }
-        .user-balance {
+        .balance-pill {
             background: rgba(0, 210, 255, 0.1);
             border: 1px solid var(--accent);
-            padding: 8px 15px; border-radius: 50px;
-            font-family: 'Orbitron'; font-size: 12px;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+            padding: 6px 15px; border-radius: 50px;
+            font-family: 'Orbitron'; font-size: 11px;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            display: none; /* Muncul setelah login */
         }
 
-        .container { width: 100%; max-width: 480px; padding: 80px 20px 20px; box-sizing: border-box; }
+        .container { width: 100%; max-width: 480px; padding: 100px 20px 40px; box-sizing: border-box; }
 
         /* Branding */
         .brand { text-align: center; margin-bottom: 40px; }
-        .logo-glow {
-            width: 70px; height: 70px; margin: 0 auto 15px;
-            background: linear-gradient(45deg, var(--accent), var(--accent-purple));
-            border-radius: 18px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px rgba(0, 210, 255, 0.4); font-size: 30px;
+        .logo-box {
+            width: 75px; height: 75px; margin: 0 auto 15px;
+            background: linear-gradient(45deg, var(--accent), var(--neon-purple));
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.4); font-size: 35px;
+            animation: pulse 2s infinite;
         }
-        h1 { font-family: 'Orbitron'; font-size: 24px; letter-spacing: 5px; margin: 0; color: white; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        h1 { font-family: 'Orbitron'; font-size: 26px; letter-spacing: 6px; margin: 0; text-shadow: 0 0 10px var(--accent); }
 
-        /* Card Galaxy System */
+        /* Card System */
         .galaxy-card {
             background: var(--glass);
             border: 1px solid var(--border);
-            border-radius: 20px; padding: 25px; margin-bottom: 20px;
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            transition: 0.4s;
+            border-radius: 24px; padding: 25px; margin-bottom: 20px;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         }
-        .galaxy-card:hover { border-color: var(--accent); box-shadow: 0 0 20px rgba(0, 210, 255, 0.1); }
 
-        /* Button Customization (StonexFF Style) */
-        .btn-action {
-            width: 100%; padding: 16px; border-radius: 15px;
-            border: none; cursor: pointer; font-weight: bold;
-            font-family: 'Orbitron'; font-size: 13px; letter-spacing: 2px;
-            transition: 0.3s; margin-top: 10px;
-            background: linear-gradient(90deg, #1e1e2e, #2a2a40);
-            color: white; border-bottom: 3px solid var(--accent);
-        }
-        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); border-bottom: 3px solid #fff; }
-
-        /* Input Styles */
+        /* Inputs & Buttons */
+        .input-group { margin-bottom: 15px; }
+        .input-group label { font-size: 11px; opacity: 0.6; margin-left: 10px; text-transform: uppercase; }
         .input-box {
             background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            padding: 15px; border-radius: 12px; color: white; width: 100%;
-            margin-bottom: 15px; box-sizing: border-box; font-family: 'Rajdhani';
+            padding: 16px; border-radius: 14px; color: white; width: 100%;
+            margin-top: 5px; box-sizing: border-box; font-family: 'Rajdhani'; font-size: 16px;
         }
-        .input-box:focus { border-color: var(--accent); outline: none; }
+        .input-box:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
 
-        /* Product Grid */
-        .product-list { display: grid; gap: 15px; }
+        .btn-neon {
+            width: 100%; padding: 18px; border-radius: 16px;
+            border: none; cursor: pointer; font-weight: bold;
+            font-family: 'Orbitron'; font-size: 13px; letter-spacing: 2px;
+            transition: 0.4s; margin-top: 10px;
+            background: #161b22; color: white;
+            border-bottom: 3px solid var(--accent);
+            text-transform: uppercase;
+        }
+        .btn-neon:hover { transform: translateY(-3px); border-bottom: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .btn-neon:active { transform: translateY(0); }
+
+        /* Product List */
         .product-item {
             display: flex; align-items: center; justify-content: space-between;
-            background: rgba(255,255,255,0.02); padding: 15px; border-radius: 15px;
-            border: 1px solid transparent; cursor: pointer;
+            background: rgba(255,255,255,0.02); padding: 18px; border-radius: 18px;
+            border: 1px solid var(--border); cursor: pointer; margin-bottom: 12px;
+            transition: 0.3s;
         }
-        .product-item:hover { background: rgba(0, 210, 255, 0.05); border-color: var(--accent); }
-        .price-text { color: #00ff88; font-family: 'Orbitron'; font-size: 14px; }
+        .product-item:hover { background: rgba(0, 210, 255, 0.08); border-color: var(--accent); }
+        .p-info b { font-family: 'Orbitron'; font-size: 14px; display: block; }
+        .p-info small { opacity: 0.5; font-size: 12px; }
+        .p-price { color: #00ff88; font-family: 'Orbitron'; font-size: 15px; }
 
-        /* Status Stages */
-        .status-badge {
-            background: rgba(255, 165, 0, 0.1); color: #ffa500;
-            padding: 10px; border-radius: 10px; text-align: center;
-            font-family: 'Orbitron'; font-size: 12px; margin-bottom: 20px;
-            border: 1px dashed #ffa500;
+        /* Loading Screen Overlay */
+        #loadingOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 6, 8, 0.95); z-index: 1000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
         }
+        .spinner {
+            width: 60px; height: 60px; border: 4px solid var(--border);
+            border-top: 4px solid var(--accent); border-radius: 50%;
+            animation: spin 1s linear infinite; margin-bottom: 20px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
+        /* Sections */
         .section { display: none; }
-        .active { display: block; animation: fadeInUp 0.6s ease; }
+        .active { display: block; animation: fadeInUp 0.5s ease forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .id-badge {
+            background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;
+            font-family: monospace; color: var(--accent); display: flex; justify-content: space-between;
+        }
     </style>
 </head>
 <body>
 
 <div class="navbar">
-    <div style="font-family: 'Orbitron'; font-size: 14px; color: var(--accent);">M-iOS</div>
-    <div class="user-balance">💰 SALDO: <span id="balanceDisplay">Rp 0</span></div>
+    <div style="font-family: 'Orbitron'; font-size: 14px; letter-spacing: 2px;">⚡ M-iOS</div>
+    <div class="balance-pill" id="balanceArea">💰 Rp <span id="balanceVal">0</span></div>
+</div>
+
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <h3 style="font-family: 'Orbitron'; letter-spacing: 3px;">PROCESSING...</h3>
+    <p style="opacity: 0.6; font-size: 13px;">Verifying payment from wallet balance</p>
 </div>
 
 <div class="container">
     <div class="brand">
-        <div class="logo-glow">⚡</div>
+        <div class="logo-box">💎</div>
         <h1>MANJII iOS</h1>
+        <p style="opacity: 0.4; font-size: 12px; margin-top: 10px; letter-spacing: 2px;">PREMIUM VIRTUAL GOODS</p>
     </div>
 
     <div id="loginSec" class="section active">
         <div class="galaxy-card">
-            <h3 style="text-align: center; font-family: 'Orbitron'; margin-bottom: 25px;">ACCOUNT ACCESS</h3>
+            <h3 style="text-align: center; font-family: 'Orbitron'; margin-bottom: 25px;">AUTH ACCESS</h3>
             <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <button class="btn-action" style="margin:0; flex:1;" onclick="setRole('cus')">CUSTOMER</button>
-                <button class="btn-action" style="margin:0; flex:1; border-bottom-color: var(--accent-purple);" onclick="setRole('res')">RESELLER</button>
+                <button class="btn-neon" style="margin:0; flex:1; border-bottom-color: var(--accent);" id="tabCus">CUSTOMER</button>
+                <button class="btn-neon" style="margin:0; flex:1; border-bottom-color: #555;" id="tabRes">RESELLER</button>
             </div>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" class="input-box" placeholder="Your Name">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" class="input-box" placeholder="••••••••">
+            </div>
+            <button class="btn-neon" onclick="handleLogin()" style="background: var(--accent); color: black;">SIGN IN ➔</button>
+            <p style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
+                Belum punya akun? <a href="javascript:void(0)" onclick="showSection('regSec')" style="color: var(--accent); text-decoration: none;">Daftar Disini</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="regSec" class="section">
+        <div class="galaxy-card">
+            <h3 style="text-align: center; font-family: 'Orbitron'; margin-bottom: 25px;">CREATE ACCOUNT</h3>
             <input type="text" class="input-box" placeholder="USERNAME">
             <input type="password" class="input-box" placeholder="PASSWORD">
-            <button class="btn-action" onclick="showSection('productSec')" style="background: var(--accent); color: black;">LOGIN SYSTEM</button>
+            <input type="password" class="input-box" placeholder="CONFIRM PASSWORD">
+            <button class="btn-neon" onclick="showSection('loginSec')" style="background: var(--neon-purple);">REGISTER NOW</button>
+            <button onclick="showSection('loginSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">⬅ KEMBALI</button>
         </div>
     </div>
 
     <div id="productSec" class="section">
         <div class="galaxy-card">
-            <h3 style="font-family: 'Orbitron'; margin-bottom: 20px;">ELITE PRODUCTS</h3>
-            <div class="product-list">
-                <div class="product-item" onclick="openOrder('PANEL iOS', 350000)">
-                    <div><b style="display:block">PANEL iOS</b><small style="opacity:0.5">V2.0 brutal optimization</small></div>
-                    <div class="price-text">350K</div>
+            <h3 style="font-family: 'Orbitron'; margin-bottom: 20px;">READY PRODUCTS</h3>
+            <div id="productList">
                 </div>
-                <div class="product-item" onclick="openOrder('CHEAT iOS', 250000)">
-                    <div><b style="display:block">CHEAT iOS</b><small style="opacity:0.5">Aimbody / Neck / Drag</small></div>
-                    <div class="price-text">250K</div>
-                </div>
-                <div class="product-item" onclick="openOrder('GBOX 1 YEAR', 150000)">
-                    <div><b style="display:block">GBOX</b><small style="opacity:0.5">Cert support enabled</small></div>
-                    <div class="price-text">150K</div>
-                </div>
-            </div>
         </div>
     </div>
 
     <div id="checkoutSec" class="section">
         <div class="galaxy-card">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h2 id="pName" style="font-family: 'Orbitron'; margin: 0;">PRODUK</h2>
-                <h3 id="pPrice" style="color: #00ff88;">Rp 0</h3>
-            </div>
-            <label style="font-size: 11px; opacity: 0.5; margin-left: 5px;">TELEGRAM USERNAME</label>
-            <input type="text" class="input-box" id="tgUser" placeholder="@username">
+            <h3 id="orderTitle" style="font-family: 'Orbitron';">PRODUCT NAME</h3>
+            <p id="orderPrice" style="color: #00ff88; font-family: 'Orbitron'; margin-bottom: 25px;">Rp 0</p>
             
-            <label style="font-size: 11px; opacity: 0.5; margin-left: 5px;">PAYMENT METHOD</label>
-            <div class="input-box" style="background: rgba(0,210,255,0.05); border-color: var(--accent);">
-                💳 SALDO AKUN WEBSITE
+            <div class="input-group">
+                <label>Telegram Username</label>
+                <input type="text" id="tgUser" class="input-box" placeholder="@username">
             </div>
+            <div class="input-group">
+                <label>Note (Optional)</label>
+                <textarea id="orderNote" class="input-box" style="height: 80px;" placeholder="Catatan tambahan..."></textarea>
+            </div>
+            
+            <button class="btn-neon" onclick="showReview()" style="background: var(--accent); color: black;">CEK STATUS ORDER ➔</button>
+        </div>
+    </div>
 
-            <textarea class="input-box" placeholder="NOTE (OPTIONAL)"></textarea>
-            
-            <button class="btn-action" onclick="processOrder()" style="background: linear-gradient(90deg, var(--accent-purple), var(--accent));">PLACE ORDER 🚀</button>
-            <button onclick="showSection('productSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5; cursor:pointer;">⬅ BACK</button>
+    <div id="reviewSec" class="section">
+        <div class="galaxy-card">
+            <h3 style="font-family: 'Orbitron'; margin-bottom: 20px;">CONFIRMATION</h3>
+            <div style="font-size: 14px; line-height: 1.8;">
+                <p>Produk: <span id="revP" style="color:var(--accent)">-</span></p>
+                <p>Telegram: <span id="revT" style="color:var(--accent)">-</span></p>
+                <p>Harga: <span id="revH" style="color:#00ff88">-</span></p>
+                <p>Metode: <span style="color:var(--accent)">Saldo Akun</span></p>
+            </div>
+            <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;">
+            <button class="btn-neon" onclick="doPayment()" style="background: #00ff88; color: black;">BAYAR SEKARANG 💳</button>
+            <button onclick="showSection('productSec')" style="background:none; border:none; color:white; width:100%; margin-top:10px; opacity:0.5;">BATALKAN</button>
         </div>
     </div>
 
     <div id="pendingSec" class="section">
-        <div class="status-badge">⏳ ORDER PENDING - WAITING APPROVAL</div>
         <div class="galaxy-card" style="text-align: center;">
-            <div style="font-family: 'Orbitron'; color: var(--accent); font-size: 18px; margin-bottom: 10px;" id="orderCode">#CO_9C2401B15E</div>
-            <p style="font-size: 13px; opacity: 0.7;">Harap simpan ID Transaksi ini. Pesanan Anda sedang diproses oleh Bot MANJII iOS.</p>
-            <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-            <div style="text-align: left; font-size: 14px;">
-                <div style="display:flex; justify-content: space-between; margin-bottom: 10px;"><span>Status</span><span style="color:orange">Processing</span></div>
-                <div style="display:flex; justify-content: space-between;"><span>Date</span><span id="orderDate">2026-04-15</span></div>
+            <div style="font-size: 50px; margin-bottom: 10px;">⏳</div>
+            <h3 style="font-family: 'Orbitron'; color: orange;">ORDER PENDING</h3>
+            <p style="font-size: 13px; opacity: 0.6;">Menunggu persetujuan admin manjii ios</p>
+            
+            <div class="id-badge" style="margin: 20px 0;">
+                <span id="trxId">#CO_9C2401B15E</span>
+                <span style="cursor: pointer; color: white;" onclick="copyTrx()">COPY</span>
             </div>
-            <button class="btn-action" onclick="showSection('productSec')" style="margin-top: 30px;">FINISH</button>
+
+            <div style="text-align: left; font-size: 12px; opacity: 0.8; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px;">
+                1. Pembayaran Berhasil ✅<br>
+                2. Verifikasi Data Admin 🔄<br>
+                3. Produk Dikirim via Bot 📦
+            </div>
+
+            <button class="btn-neon" onclick="location.reload()" style="margin-top: 25px;">KEMBALI KE HOME</button>
         </div>
     </div>
 </div>
 
 <script>
-    let userBalance = 1000000; // Contoh saldo awal
-    let currentPrice = 0;
+    let userRole = 'customer';
+    let balance = 0; // Default 0 untuk pendaftar baru
+    let selectedItem = {};
 
-    function updateBalanceDisplay() {
-        document.getElementById('balanceDisplay').innerText = "Rp " + userBalance.toLocaleString();
-    }
+    const products = {
+        customer: [
+            { n: 'PANEL iOS', p: 350000 },
+            { n: 'CHEAT iOS', p: 250000 },
+            { n: 'GBOX 1 TAHUN', p: 150000 },
+            { n: 'ESIGN 1 TAHUN', p: 150000 }
+        ],
+        reseller: [
+            { n: 'PANEL iOS (RESELLER)', p: 350000 },
+            { n: 'CHEAT iOS (RESELLER)', p: 200000 },
+            { n: 'GBOX 1 TAHUN (RESELLER)', p: 130000 },
+            { n: 'ESIGN 1 TAHUN (RESELLER)', p: 130000 }
+        ]
+    };
 
     function showSection(id) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -200,35 +262,83 @@
         window.scrollTo(0,0);
     }
 
-    function openOrder(name, price) {
-        currentPrice = price;
-        document.getElementById('pName').innerText = name;
-        document.getElementById('pPrice').innerText = "Rp " + price.toLocaleString();
+    function handleLogin() {
+        // Simulasi Login Berhasil
+        document.getElementById('balanceArea').style.display = 'block';
+        document.getElementById('balanceVal').innerText = balance.toLocaleString();
+        renderProducts();
+        showSection('productSec');
+    }
+
+    function renderProducts() {
+        const list = document.getElementById('productList');
+        list.innerHTML = '';
+        products[userRole].forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'product-item';
+            div.onclick = () => openCheckout(item);
+            div.innerHTML = `
+                <div class="p-info"><b>${item.n}</b><small>Premium Protection Enabled</small></div>
+                <div class="p-price">Rp ${item.p.toLocaleString()}</div>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    function openCheckout(item) {
+        selectedItem = item;
+        document.getElementById('orderTitle').innerText = item.n;
+        document.getElementById('orderPrice').innerText = "Rp " + item.p.toLocaleString();
         showSection('checkoutSec');
     }
 
-    function processOrder() {
-        if (userBalance < currentPrice) {
-            alert("Saldo Tidak Cukup! Silakan Hubungi Admin.");
+    function showReview() {
+        const tg = document.getElementById('tgUser').value;
+        if(!tg) return alert("Isi Username Telegram!");
+        
+        document.getElementById('revP').innerText = selectedItem.n;
+        document.getElementById('revT').innerText = tg;
+        document.getElementById('revH').innerText = "Rp " + selectedItem.p.toLocaleString();
+        showSection('reviewSec');
+    }
+
+    function doPayment() {
+        if (balance < selectedItem.p) {
+            alert("Saldo Anda Rp 0! Silakan hubungi Admin Manjii iOS untuk Top Up.");
             return;
         }
+
+        document.getElementById('loadingOverlay').style.display = 'flex';
         
-        userBalance -= currentPrice;
-        updateBalanceDisplay();
-        
-        const code = "CO_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-        document.getElementById('orderCode').innerText = "#" + code;
-        document.getElementById('orderDate').innerText = new Date().toISOString().split('T')[0];
-        
-        showSection('pendingSec');
+        // Loading screen 3 detik agar terasa "nyata"
+        setTimeout(() => {
+            balance -= selectedItem.p;
+            document.getElementById('balanceVal').innerText = balance.toLocaleString();
+            document.getElementById('loadingOverlay').style.display = 'none';
+            
+            const randomID = "MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
+            document.getElementById('trxId').innerText = "#" + randomID;
+            showSection('pendingSec');
+        }, 3000);
     }
 
-    function setRole(role) {
-        // Logika sederhana untuk demonstrasi
-        alert("Role " + role + " Selected. Please Login.");
+    function copyTrx() {
+        const txt = document.getElementById('trxId').innerText;
+        navigator.clipboard.writeText(txt);
+        alert("ID Transaksi Berhasil di Copy!");
     }
 
-    updateBalanceDisplay();
+    // Tab Logic
+    document.getElementById('tabCus').onclick = () => {
+        userRole = 'customer';
+        document.getElementById('tabCus').style.borderBottomColor = 'var(--accent)';
+        document.getElementById('tabRes').style.borderBottomColor = '#555';
+    };
+    document.getElementById('tabRes').onclick = () => {
+        userRole = 'reseller';
+        document.getElementById('tabRes').style.borderBottomColor = 'var(--accent)';
+        document.getElementById('tabCus').style.borderBottomColor = '#555';
+    };
 </script>
 
 </body>
