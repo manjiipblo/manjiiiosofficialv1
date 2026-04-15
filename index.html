@@ -12,6 +12,7 @@
             --bg-dark: #050608;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
+            --neon-shadow: 0 0 20px rgba(0, 210, 255, 0.6), 0 0 40px rgba(0, 210, 255, 0.3);
         }
 
         body {
@@ -24,7 +25,7 @@
             min-height: 100vh; overflow-x: hidden;
         }
 
-        /* Nav & Balance Area */
+        /* Nav & Balance */
         .navbar {
             position: fixed; top: 0; width: 100%; max-width: 500px;
             display: flex; justify-content: space-between; align-items: center;
@@ -36,223 +37,219 @@
             border: 1px solid var(--accent);
             padding: 6px 15px; border-radius: 50px;
             font-family: 'Orbitron'; font-size: 11px;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-            display: none; /* Muncul setelah login */
+            box-shadow: var(--neon-shadow);
+            display: none;
         }
 
         .container { width: 100%; max-width: 480px; padding: 100px 20px 40px; box-sizing: border-box; }
 
-        /* Branding */
-        .brand { text-align: center; margin-bottom: 40px; }
+        /* Neon Branding */
         .logo-box {
-            width: 75px; height: 75px; margin: 0 auto 15px;
+            width: 80px; height: 80px; margin: 0 auto 20px;
             background: linear-gradient(45deg, var(--accent), var(--neon-purple));
-            border-radius: 20px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px rgba(0, 210, 255, 0.4); font-size: 35px;
-            animation: pulse 2s infinite;
+            border-radius: 22px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 50px rgba(0, 210, 255, 0.6); font-size: 40px;
         }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        h1 { font-family: 'Orbitron'; font-size: 26px; letter-spacing: 6px; margin: 0; text-shadow: 0 0 10px var(--accent); }
+        h1 { 
+            font-family: 'Orbitron'; font-size: 28px; letter-spacing: 6px; 
+            text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
+            text-align: center; margin: 0;
+        }
 
-        /* Card System */
+        /* Galaxy Card */
         .galaxy-card {
             background: var(--glass);
             border: 1px solid var(--border);
-            border-radius: 24px; padding: 25px; margin-bottom: 20px;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 28px; padding: 30px; margin-bottom: 25px;
+            backdrop-filter: blur(25px);
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
         }
 
-        /* Inputs & Buttons */
-        .input-group { margin-bottom: 15px; }
-        .input-group label { font-size: 11px; opacity: 0.6; margin-left: 10px; text-transform: uppercase; }
         .input-box {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            padding: 16px; border-radius: 14px; color: white; width: 100%;
-            margin-top: 5px; box-sizing: border-box; font-family: 'Rajdhani'; font-size: 16px;
-        }
-        .input-box:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
-
-        .btn-neon {
-            width: 100%; padding: 18px; border-radius: 16px;
-            border: none; cursor: pointer; font-weight: bold;
-            font-family: 'Orbitron'; font-size: 13px; letter-spacing: 2px;
-            transition: 0.4s; margin-top: 10px;
-            background: #161b22; color: white;
-            border-bottom: 3px solid var(--accent);
-            text-transform: uppercase;
-        }
-        .btn-neon:hover { transform: translateY(-3px); border-bottom: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .btn-neon:active { transform: translateY(0); }
-
-        /* Product List */
-        .product-item {
-            display: flex; align-items: center; justify-content: space-between;
-            background: rgba(255,255,255,0.02); padding: 18px; border-radius: 18px;
-            border: 1px solid var(--border); cursor: pointer; margin-bottom: 12px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            padding: 18px; border-radius: 16px; color: white; width: 100%;
+            margin-top: 10px; box-sizing: border-box; font-family: 'Rajdhani';
             transition: 0.3s;
         }
-        .product-item:hover { background: rgba(0, 210, 255, 0.08); border-color: var(--accent); }
-        .p-info b { font-family: 'Orbitron'; font-size: 14px; display: block; }
-        .p-info small { opacity: 0.5; font-size: 12px; }
-        .p-price { color: #00ff88; font-family: 'Orbitron'; font-size: 15px; }
+        .input-box:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
 
-        /* Loading Screen Overlay */
+        /* High Glow Buttons */
+        .btn-neon {
+            width: 100%; padding: 18px; border-radius: 18px;
+            border: none; cursor: pointer; font-weight: bold;
+            font-family: 'Orbitron'; font-size: 13px; letter-spacing: 2px;
+            transition: 0.4s; margin-top: 15px;
+            background: #111; color: white;
+            border-bottom: 4px solid var(--accent);
+            text-shadow: 0 0 5px white;
+        }
+        .btn-neon:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 0 30px var(--accent);
+            border-bottom: 4px solid #fff;
+        }
+
+        /* Product Styles */
+        .product-item {
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px;
+            border: 1px solid var(--border); cursor: pointer; margin-bottom: 15px;
+        }
+        .product-item:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,210,255,0.2); }
+        .p-price { color: #00ff88; font-family: 'Orbitron'; text-shadow: 0 0 10px #00ff88; }
+
+        /* Loading Overlay */
         #loadingOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 6, 8, 0.95); z-index: 1000;
+            background: rgba(5, 6, 8, 0.98); z-index: 1000;
             display: none; flex-direction: column; align-items: center; justify-content: center;
         }
         .spinner {
-            width: 60px; height: 60px; border: 4px solid var(--border);
-            border-top: 4px solid var(--accent); border-radius: 50%;
-            animation: spin 1s linear infinite; margin-bottom: 20px;
+            width: 70px; height: 70px; border: 5px solid var(--border);
+            border-top: 5px solid var(--accent); border-radius: 50%;
+            animation: spin 1s linear infinite; box-shadow: 0 0 20px var(--accent);
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Sections */
         .section { display: none; }
-        .active { display: block; animation: fadeInUp 0.5s ease forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-        .id-badge {
-            background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;
-            font-family: monospace; color: var(--accent); display: flex; justify-content: space-between;
-        }
+        .active { display: block; animation: zoomIn 0.4s ease; }
+        @keyframes zoomIn { from { opacity:0; transform: scale(0.9); } to { opacity:1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
 <div class="navbar">
-    <div style="font-family: 'Orbitron'; font-size: 14px; letter-spacing: 2px;">⚡ M-iOS</div>
+    <div style="font-family: 'Orbitron'; color: var(--accent); text-shadow: 0 0 10px var(--accent);">⚡ M-iOS</div>
     <div class="balance-pill" id="balanceArea">💰 Rp <span id="balanceVal">0</span></div>
 </div>
 
 <div id="loadingOverlay">
     <div class="spinner"></div>
-    <h3 style="font-family: 'Orbitron'; letter-spacing: 3px;">PROCESSING...</h3>
-    <p style="opacity: 0.6; font-size: 13px;">Verifying payment from wallet balance</p>
+    <h3 style="font-family: 'Orbitron'; color: var(--accent); text-shadow: 0 0 15px var(--accent);">VERIFYING TRANSACTION...</h3>
 </div>
 
 <div class="container">
-    <div class="brand">
-        <div class="logo-box">💎</div>
-        <h1>MANJII iOS</h1>
-        <p style="opacity: 0.4; font-size: 12px; margin-top: 10px; letter-spacing: 2px;">PREMIUM VIRTUAL GOODS</p>
-    </div>
-
     <div id="loginSec" class="section active">
-        <div class="galaxy-card">
-            <h3 style="text-align: center; font-family: 'Orbitron'; margin-bottom: 25px;">AUTH ACCESS</h3>
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <button class="btn-neon" style="margin:0; flex:1; border-bottom-color: var(--accent);" id="tabCus">CUSTOMER</button>
-                <button class="btn-neon" style="margin:0; flex:1; border-bottom-color: #555;" id="tabRes">RESELLER</button>
+        <div class="logo-box">🚀</div>
+        <h1>MANJII iOS</h1>
+        <div class="galaxy-card" style="margin-top: 30px;">
+            <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                <button class="btn-neon" style="margin:0; flex:1;" id="tabCus">CUSTOMER</button>
+                <button class="btn-neon" style="margin:0; flex:1; border-bottom-color: var(--neon-purple);" id="tabRes">RESELLER</button>
             </div>
-            <div class="input-group">
-                <label>Username</label>
-                <input type="text" class="input-box" placeholder="Your Name">
-            </div>
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" class="input-box" placeholder="••••••••">
-            </div>
-            <button class="btn-neon" onclick="handleLogin()" style="background: var(--accent); color: black;">SIGN IN ➔</button>
-            <p style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
-                Belum punya akun? <a href="javascript:void(0)" onclick="showSection('regSec')" style="color: var(--accent); text-decoration: none;">Daftar Disini</a>
+            <input type="text" id="logUser" class="input-box" placeholder="USERNAME">
+            <input type="password" id="logPass" class="input-box" placeholder="PASSWORD">
+            <button class="btn-neon" onclick="tryLogin()" style="background: var(--accent); color: black;">MASUK SISTEM ➔</button>
+            <p id="regPrompt" style="text-align: center; font-size: 13px; margin-top: 20px; opacity: 0.6;">
+                Belum punya akun? <a href="javascript:void(0)" onclick="showSection('regSec')" style="color: var(--accent);">Daftar Sekarang</a>
             </p>
         </div>
     </div>
 
     <div id="regSec" class="section">
-        <div class="galaxy-card">
-            <h3 style="text-align: center; font-family: 'Orbitron'; margin-bottom: 25px;">CREATE ACCOUNT</h3>
-            <input type="text" class="input-box" placeholder="USERNAME">
-            <input type="password" class="input-box" placeholder="PASSWORD">
-            <input type="password" class="input-box" placeholder="CONFIRM PASSWORD">
-            <button class="btn-neon" onclick="showSection('loginSec')" style="background: var(--neon-purple);">REGISTER NOW</button>
+        <h1>DAFTAR AKUN</h1>
+        <div class="galaxy-card" style="margin-top: 20px;">
+            <input type="text" id="regUser" class="input-box" placeholder="USERNAME BARU">
+            <input type="password" id="regPass" class="input-box" placeholder="PASSWORD BARU">
+            <button class="btn-neon" onclick="handleRegister()" style="background: var(--neon-purple);">BUAT AKUN 🚀</button>
             <button onclick="showSection('loginSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">⬅ KEMBALI</button>
         </div>
     </div>
 
     <div id="productSec" class="section">
         <div class="galaxy-card">
-            <h3 style="font-family: 'Orbitron'; margin-bottom: 20px;">READY PRODUCTS</h3>
-            <div id="productList">
-                </div>
+            <h3 id="roleTag" style="font-family: 'Orbitron'; color: var(--accent);">CUSTOMER PANEL</h3>
+            <div id="productList"></div>
         </div>
     </div>
 
     <div id="checkoutSec" class="section">
         <div class="galaxy-card">
-            <h3 id="orderTitle" style="font-family: 'Orbitron';">PRODUCT NAME</h3>
-            <p id="orderPrice" style="color: #00ff88; font-family: 'Orbitron'; margin-bottom: 25px;">Rp 0</p>
+            <h2 id="pName" style="font-family: 'Orbitron'; margin: 0;">-</h2>
+            <h3 id="pPrice" style="color: #00ff88; margin-top: 5px;">Rp 0</h3>
+            <hr style="border:0; border-top:1px solid var(--border); margin: 20px 0;">
             
-            <div class="input-group">
-                <label>Telegram Username</label>
-                <input type="text" id="tgUser" class="input-box" placeholder="@username">
-            </div>
-            <div class="input-group">
-                <label>Note (Optional)</label>
-                <textarea id="orderNote" class="input-box" style="height: 80px;" placeholder="Catatan tambahan..."></textarea>
-            </div>
+            <label style="font-size: 11px; opacity: 0.5;">USERNAME TELEGRAM</label>
+            <input type="text" id="tgUser" class="input-box" placeholder="@username">
             
-            <button class="btn-neon" onclick="showReview()" style="background: var(--accent); color: black;">CEK STATUS ORDER ➔</button>
+            <label style="font-size: 11px; opacity: 0.5; display:block; margin-top:15px;">METODE PEMBAYARAN</label>
+            <div class="input-box" style="border-color: var(--accent); background: rgba(0,210,255,0.05);">
+                💳 SALDO AKUN WEBSITE
+            </div>
+
+            <label style="font-size: 11px; opacity: 0.5; display:block; margin-top:15px;">NOTE (CATATAN)</label>
+            <textarea id="note" class="input-box" style="height: 70px;"></textarea>
+
+            <button class="btn-neon" onclick="showReview()" style="background: var(--accent); color: black;">CEK STATUS FORMAT ORDER</button>
         </div>
     </div>
 
     <div id="reviewSec" class="section">
         <div class="galaxy-card">
-            <h3 style="font-family: 'Orbitron'; margin-bottom: 20px;">CONFIRMATION</h3>
-            <div style="font-size: 14px; line-height: 1.8;">
-                <p>Produk: <span id="revP" style="color:var(--accent)">-</span></p>
-                <p>Telegram: <span id="revT" style="color:var(--accent)">-</span></p>
-                <p>Harga: <span id="revH" style="color:#00ff88">-</span></p>
-                <p>Metode: <span style="color:var(--accent)">Saldo Akun</span></p>
+            <h3 style="font-family: 'Orbitron'; text-align: center;">DETAIL PEMBELIAN</h3>
+            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; font-size: 14px; line-height: 2;">
+                📦 PRODUK: <span id="revP" style="color:var(--accent)">-</span><br>
+                💰 HARGA: <span id="revH" style="color:#00ff88">-</span><br>
+                📱 TELEGRAM: <span id="revT" style="color:var(--accent)">-</span><br>
+                📝 NOTE: <span id="revN">-</span>
             </div>
-            <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;">
-            <button class="btn-neon" onclick="doPayment()" style="background: #00ff88; color: black;">BAYAR SEKARANG 💳</button>
-            <button onclick="showSection('productSec')" style="background:none; border:none; color:white; width:100%; margin-top:10px; opacity:0.5;">BATALKAN</button>
+            <button class="btn-neon" onclick="processPayment()" style="background: #00ff88; color: black;">KONFIRMASI PEMBAYARAN ➔</button>
+            <button onclick="showSection('productSec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5;">BATAL</button>
         </div>
     </div>
 
     <div id="pendingSec" class="section">
-        <div class="galaxy-card" style="text-align: center;">
-            <div style="font-size: 50px; margin-bottom: 10px;">⏳</div>
-            <h3 style="font-family: 'Orbitron'; color: orange;">ORDER PENDING</h3>
-            <p style="font-size: 13px; opacity: 0.6;">Menunggu persetujuan admin manjii ios</p>
-            
-            <div class="id-badge" style="margin: 20px 0;">
-                <span id="trxId">#CO_9C2401B15E</span>
-                <span style="cursor: pointer; color: white;" onclick="copyTrx()">COPY</span>
-            </div>
-
-            <div style="text-align: left; font-size: 12px; opacity: 0.8; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px;">
-                1. Pembayaran Berhasil ✅<br>
-                2. Verifikasi Data Admin 🔄<br>
-                3. Produk Dikirim via Bot 📦
-            </div>
-
-            <button class="btn-neon" onclick="location.reload()" style="margin-top: 25px;">KEMBALI KE HOME</button>
+        <div class="galaxy-card" style="text-align: center; border-color: orange;">
+            <div style="font-size: 50px;">⏳</div>
+            <h3 style="font-family: 'Orbitron'; color: orange; text-shadow: 0 0 10px orange;">ORDER PENDING</h3>
+            <div style="background: #111; padding: 15px; border-radius: 12px; font-family: monospace; margin: 15px 0; color: var(--accent);" id="trxId">#CO_9C2401B15E</div>
+            <p style="font-size: 12px; opacity: 0.6;">Pesanan Anda sedang diproses. Produk akan dikirimkan otomatis ke Telegram Anda oleh Bot.</p>
+            <button class="btn-neon" onclick="location.reload()">FINISH</button>
         </div>
     </div>
 </div>
 
 <script>
-    let userRole = 'customer';
-    let balance = 0; // Default 0 untuk pendaftar baru
-    let selectedItem = {};
+    // DATABASE SIMULASI
+    let usersDB = {
+        "admin_manjii": "manjii123" // Contoh akun admin
+    };
+    let resellersDB = {
+        "reseller_vip": "vip777" // Hanya admin yang bisa tambah ini di script
+    };
+    
+    let currentRole = 'customer';
+    let currentUser = null;
+    let balance = 0;
+    let selectedItem = null;
 
+    // DATA PRODUK SESUAI PERINTAH
     const products = {
         customer: [
-            { n: 'PANEL iOS', p: 350000 },
-            { n: 'CHEAT iOS', p: 250000 },
-            { n: 'GBOX 1 TAHUN', p: 150000 },
-            { n: 'ESIGN 1 TAHUN', p: 150000 }
+            { n: "PANEL iOS", p: 350000 },
+            { n: "INJECTOR iOS/ANDRO", p: 250000 },
+            { n: "CHEAT iOS", p: 250000 },
+            { n: "GBOX 1 TAHUN", p: 150000 },
+            { n: "ESIGN 1 TAHUN", p: 150000 },
+            { n: "KEY 1 DAY", p: 25000 },
+            { n: "KEY 7 DAY", p: 50000 },
+            { n: "KEY 30 DAY", p: 70000 },
+            { n: "KEY 90 DAY", p: 100000 },
+            { n: "KEY 180 DAY", p: 140000 },
+            { n: "KEY 218 DAY", p: 160000 }
         ],
         reseller: [
-            { n: 'PANEL iOS (RESELLER)', p: 350000 },
-            { n: 'CHEAT iOS (RESELLER)', p: 200000 },
-            { n: 'GBOX 1 TAHUN (RESELLER)', p: 130000 },
-            { n: 'ESIGN 1 TAHUN (RESELLER)', p: 130000 }
+            { n: "PANEL iOS (R)", p: 350000 },
+            { n: "INJECTOR (R)", p: 200000 },
+            { n: "CHEAT iOS (R)", p: 200000 },
+            { n: "GBOX 1 TAHUN (R)", p: 130000 },
+            { n: "ESIGN 1 TAHUN (R)", p: 130000 },
+            { n: "KEY 1 DAY (R)", p: 20000 },
+            { n: "KEY 7 DAY (R)", p: 40000 },
+            { n: "KEY 30 DAY (R)", p: 55000 },
+            { n: "KEY 90 DAY (R)", p: 85000 },
+            { n: "KEY 180 DAY (R)", p: 120000 },
+            { n: "KEY 218 DAY (R)", p: 145000 }
         ]
     };
 
@@ -262,10 +259,42 @@
         window.scrollTo(0,0);
     }
 
-    function handleLogin() {
-        // Simulasi Login Berhasil
+    // LOGIN LOGIC
+    function tryLogin() {
+        const u = document.getElementById('logUser').value;
+        const p = document.getElementById('logPass').value;
+
+        if (currentRole === 'customer') {
+            if (usersDB[u] && usersDB[u] === p) {
+                successLogin(u);
+            } else {
+                alert("Akun Customer tidak ditemukan! Silakan daftar dulu.");
+            }
+        } else {
+            if (resellersDB[u] && resellersDB[u] === p) {
+                successLogin(u);
+            } else {
+                alert("Akun Reseller tidak terdaftar! Hubungi Admin Manjii iOS.");
+            }
+        }
+    }
+
+    function handleRegister() {
+        const u = document.getElementById('regUser').value;
+        const p = document.getElementById('regPass').value;
+        if(u && p) {
+            usersDB[u] = p; // Daftarkan ke DB simulasi
+            alert("Pendaftaran Berhasil! Silakan Login.");
+            showSection('loginSec');
+        } else {
+            alert("Isi data dengan lengkap!");
+        }
+    }
+
+    function successLogin(user) {
+        currentUser = user;
         document.getElementById('balanceArea').style.display = 'block';
-        document.getElementById('balanceVal').innerText = balance.toLocaleString();
+        document.getElementById('roleTag').innerText = currentRole.toUpperCase() + " PANEL";
         renderProducts();
         showSection('productSec');
     }
@@ -273,73 +302,62 @@
     function renderProducts() {
         const list = document.getElementById('productList');
         list.innerHTML = '';
-        products[userRole].forEach(item => {
+        products[currentRole].forEach(item => {
             const div = document.createElement('div');
             div.className = 'product-item';
-            div.onclick = () => openCheckout(item);
+            div.onclick = () => { selectedItem = item; openCheckout(); };
             div.innerHTML = `
-                <div class="p-info"><b>${item.n}</b><small>Premium Protection Enabled</small></div>
+                <div><b>${item.n}</b><br><small style="opacity:0.5">Premium Mod</small></div>
                 <div class="p-price">Rp ${item.p.toLocaleString()}</div>
             `;
             list.appendChild(div);
         });
     }
 
-    function openCheckout(item) {
-        selectedItem = item;
-        document.getElementById('orderTitle').innerText = item.n;
-        document.getElementById('orderPrice').innerText = "Rp " + item.p.toLocaleString();
+    function openCheckout() {
+        document.getElementById('pName').innerText = selectedItem.n;
+        document.getElementById('pPrice').innerText = "Rp " + selectedItem.p.toLocaleString();
         showSection('checkoutSec');
     }
 
     function showReview() {
         const tg = document.getElementById('tgUser').value;
         if(!tg) return alert("Isi Username Telegram!");
-        
         document.getElementById('revP').innerText = selectedItem.n;
-        document.getElementById('revT').innerText = tg;
         document.getElementById('revH').innerText = "Rp " + selectedItem.p.toLocaleString();
+        document.getElementById('revT').innerText = tg;
+        document.getElementById('revN').innerText = document.getElementById('note').value || "-";
         showSection('reviewSec');
     }
 
-    function doPayment() {
+    function processPayment() {
         if (balance < selectedItem.p) {
-            alert("Saldo Anda Rp 0! Silakan hubungi Admin Manjii iOS untuk Top Up.");
+            alert("Saldo Rp 0! Hubungi Admin untuk Top Up.");
             return;
         }
-
         document.getElementById('loadingOverlay').style.display = 'flex';
-        
-        // Loading screen 3 detik agar terasa "nyata"
         setTimeout(() => {
             balance -= selectedItem.p;
             document.getElementById('balanceVal').innerText = balance.toLocaleString();
             document.getElementById('loadingOverlay').style.display = 'none';
-            
-            const randomID = "MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-            document.getElementById('trxId').innerText = "#" + randomID;
+            document.getElementById('trxId').innerText = "#MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
             showSection('pendingSec');
-        }, 3000);
+        }, 4000); // Loading lebih lama agar nyata
     }
 
-    function copyTrx() {
-        const txt = document.getElementById('trxId').innerText;
-        navigator.clipboard.writeText(txt);
-        alert("ID Transaksi Berhasil di Copy!");
-    }
-
-    // Tab Logic
+    // Tab Handling
     document.getElementById('tabCus').onclick = () => {
-        userRole = 'customer';
+        currentRole = 'customer';
+        document.getElementById('regPrompt').style.display = 'block';
         document.getElementById('tabCus').style.borderBottomColor = 'var(--accent)';
-        document.getElementById('tabRes').style.borderBottomColor = '#555';
+        document.getElementById('tabRes').style.borderBottomColor = '#333';
     };
     document.getElementById('tabRes').onclick = () => {
-        userRole = 'reseller';
+        currentRole = 'reseller';
+        document.getElementById('regPrompt').style.display = 'none';
         document.getElementById('tabRes').style.borderBottomColor = 'var(--accent)';
-        document.getElementById('tabCus').style.borderBottomColor = '#555';
+        document.getElementById('tabCus').style.borderBottomColor = '#333';
     };
 </script>
-
 </body>
 </html>
