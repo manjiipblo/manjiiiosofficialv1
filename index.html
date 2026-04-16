@@ -147,9 +147,9 @@
             
             <div class="guide-box">
                 <b>PANDUAN PEMBELIAN:</b><br>
-                1. Saldo akan otomatis terpotong saat klik Bayar.<br>
-                2. Admin akan menerima notifikasi otomatis.<br>
-                3. Lisensi dikirimkan via Bot Telegram Anda (Pastikan Username Benar).
+                1. Hubungi Admin setelah melakukan pesanan.<br>
+                2. Simpan Bukti Transaksi Anda.<br>
+                3. Lisensi dikirimkan via Telegram setelah verifikasi.
             </div>
 
             <div id="keyBox" style="display:none; margin-bottom: 20px;">
@@ -173,7 +173,7 @@
             <h3 style="font-family: 'Orbitron'; text-align: center; letter-spacing: 2px;">CONFIRMATION</h3>
             <div id="revInfo" style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 18px; font-size: 15px; line-height: 2.2; border: 1px solid rgba(255,255,255,0.05);">
             </div>
-            <button class="btn-neon" onclick="doPay()" style="background: #00ff88; color: black; margin-top: 25px;">KONFIRMASI & BAYAR</button>
+            <button class="btn-neon" onclick="doPay()" style="background: #00ff88; color: black; margin-top: 25px;">KONFIRMASI PESANAN</button>
             <button onclick="showSec('buySec')" style="background:none; border:none; color:white; width:100%; margin-top:15px; opacity:0.5; cursor:pointer;">REVISI DATA</button>
         </div>
     </div>
@@ -181,21 +181,17 @@
     <div id="pendSec" class="section">
         <div class="galaxy-card" style="text-align: center; border-color: orange;">
             <div style="font-size: 55px; filter: drop-shadow(0 0 15px orange);">⏳</div>
-            <h3 style="font-family: 'Orbitron'; color: orange; text-shadow: 0 0 15px orange; margin-top:15px;">ORDER BERHASIL</h3>
+            <h3 style="font-family: 'Orbitron'; color: orange; text-shadow: 0 0 15px orange; margin-top:15px;">PESANAN TERKIRIM</h3>
             <div id="trx" style="background:#000; padding:18px; border-radius:14px; font-family:monospace; margin:20px 0; color:var(--accent); border: 1px solid var(--accent); font-size:16px;">#MJ_XXX</div>
-            <p style="font-size: 13px; opacity: 0.7;">Saldo telah terpotong. Lisensi telah dikirim otomatis oleh Bot ke Telegram Anda.</p>
+            <p style="font-size: 13px; opacity: 0.7;">Pesanan Anda sedang diproses. Silakan kirimkan ID Transaksi di atas ke Admin.</p>
             <button class="btn-neon" onclick="showSec('prodSec')">BELANJA LAGI</button>
         </div>
     </div>
 </div>
 
 <script>
-    // URL GOOGLE APPS SCRIPT TERBARU
-    const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbzGANMHTPaMViW_00-wOItGQYX31QaW6P6gPtUajU-w76egUqKLWrbdZSnTmE5H-aMO7g/exec";
+    const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbywesGaSouQnGdHOthHPj3W5UfGJ0f2SaZsWfv3tY1mYKZlolFiOsqYvw41y3U7mKxqgw/exec";
     
-    // URL API BOT VPS
-    const API_URL = "https://legal-new.putravvip.dev:3468"; 
-
     let role = 'customer';
     let user = localStorage.getItem('manjii_user') || null;
     let balance = 0;
@@ -239,27 +235,14 @@
             const res = await fetch(SPREADSHEET_URL);
             const dbAccounts = await res.json();
             
-            // Pencocokan data (Username Case-Insensitive)
             const account = dbAccounts.find(acc => 
                 acc.username.toLowerCase() === uInput.toLowerCase() && 
                 acc.password.toString() === pInput
             );
             
             if(account) {
-                // Login VPS untuk tarik saldo real-time
-                const vpsRes = await fetch(`${API_URL}/api/login`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ 
-                        role: role === 'customer' ? 'cus' : 'res', 
-                        username: uInput, 
-                        password: pInput 
-                    })
-                });
-                const vpsResult = await vpsRes.json();
-
                 user = uInput;
-                balance = vpsResult.success ? vpsResult.balance : 0;
+                balance = account.balance || 0; // Mengambil saldo dari Google Sheets
                 localStorage.setItem('manjii_user', uInput);
                 localStorage.setItem('manjii_role', role);
                 startApp();
@@ -268,7 +251,7 @@
             }
         } catch (e) { 
             console.error(e);
-            alert("⚠️ KONEKSI DATABASE GAGAL\nPastikan URL Apps Script benar dan Deployment disetel ke 'Anyone'."); 
+            alert("⚠️ KONEKSI DATABASE GAGAL\nPastikan URL Apps Script benar."); 
         }
         document.getElementById('loadingOverlay').style.display = 'none';
     }
@@ -329,39 +312,19 @@
             ⏳ <span class="label-blue">DURASI:</span> ${dur}<br>
             💰 <span class="label-blue">HARGA:</span> <span class="label-green">Rp ${selected.final.toLocaleString()}</span><br>
             📱 <span class="label-blue">TELEGRAM:</span> @${document.getElementById('tg').value.replace('@','')}<br>
-            💳 <span class="label-blue">METODE:</span> SALDO WEBSITE
+            💳 <span class="label-blue">STATUS:</span> MENUNGGU VERIFIKASI
         `;
         showSec('revSec');
     }
 
     async function doPay() {
-        const tgVal = document.getElementById('tg').value.replace('@','');
-        const durVal = selected.isK ? document.getElementById('keySel').options[document.getElementById('keySel').selectedIndex].text : null;
-        
         document.getElementById('loadingOverlay').style.display = 'flex';
-        try {
-            const res = await fetch(`${API_URL}/api/pay`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ 
-                    role: localStorage.getItem('manjii_role') === 'customer' ? 'cus' : 'res', 
-                    username: user, 
-                    amount: selected.final,
-                    product: selected.n,
-                    duration: durVal,
-                    tg_username: tgVal,
-                    note: document.getElementById('note').value
-                })
-            });
-            const result = await res.json();
-            if(result.success) {
-                balance = result.newBalance;
-                document.getElementById('balVal').innerText = balance.toLocaleString();
-                document.getElementById('trx').innerText = "#MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-                showSec('pendSec');
-            } else { alert(result.message); }
-        } catch (e) { alert("Transaksi gagal! Periksa koneksi ke Bot."); }
-        document.getElementById('loadingOverlay').style.display = 'none';
+        // Simulasi proses karena API VPS dihapus
+        setTimeout(() => {
+            document.getElementById('trx').innerText = "#MJ_" + Math.random().toString(36).substr(2, 9).toUpperCase();
+            showSec('pendSec');
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }, 1500);
     }
 
     function logout() { localStorage.removeItem('manjii_user'); localStorage.removeItem('manjii_role'); location.reload(); }
