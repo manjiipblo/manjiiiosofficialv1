@@ -190,10 +190,10 @@
 </div>
 
 <script>
-    // URL GOOGLE APPS SCRIPT (DATABASE GOOGLE SHEETS)
-    const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbwz958WEwvVkNh7I9Fzq2o_Yr-qti2L0zHqxPhviyEJa-TggQf53oa8Y9X9yZ6eRsCwOw/exec";
+    // URL GOOGLE APPS SCRIPT TERBARU
+    const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbzGANMHTPaMViW_00-wOItGQYX31QaW6P6gPtUajU-w76egUqKLWrbdZSnTmE5H-aMO7g/exec";
     
-    // URL API BOT VPS (UNTUK TRANSAKSI/PAYMENT)
+    // URL API BOT VPS
     const API_URL = "https://legal-new.putravvip.dev:3468"; 
 
     let role = 'customer';
@@ -229,40 +229,46 @@
         window.scrollTo(0,0);
     }
 
-    // --- FUNGSI LOGIN BARU: CEK KE GOOGLE SHEETS ---
     async function tryLogin() {
-        const u = document.getElementById('logU').value;
-        const p = document.getElementById('logP').value;
-        if(!u || !p) return alert("Isi lengkap!");
+        const uInput = document.getElementById('logU').value.trim();
+        const pInput = document.getElementById('logP').value.trim();
+        if(!uInput || !pInput) return alert("Silakan isi Username dan Password!");
 
         document.getElementById('loadingOverlay').style.display = 'flex';
         try {
-            // Ambil seluruh data dari Google Sheets
             const res = await fetch(SPREADSHEET_URL);
             const dbAccounts = await res.json();
             
-            // Cari apakah ada username & password yang cocok
-            const account = dbAccounts.find(acc => acc.username === u && acc.password === p);
+            // Pencocokan data (Username Case-Insensitive)
+            const account = dbAccounts.find(acc => 
+                acc.username.toLowerCase() === uInput.toLowerCase() && 
+                acc.password.toString() === pInput
+            );
             
             if(account) {
-                // Jika login di Google Sheets berhasil, ambil saldo dari VPS
+                // Login VPS untuk tarik saldo real-time
                 const vpsRes = await fetch(`${API_URL}/api/login`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ role: 'res', username: u, password: p })
+                    body: JSON.stringify({ 
+                        role: role === 'customer' ? 'cus' : 'res', 
+                        username: uInput, 
+                        password: pInput 
+                    })
                 });
                 const vpsResult = await vpsRes.json();
 
-                user = u;
+                user = uInput;
                 balance = vpsResult.success ? vpsResult.balance : 0;
-                localStorage.setItem('manjii_user', u);
+                localStorage.setItem('manjii_user', uInput);
                 localStorage.setItem('manjii_role', role);
                 startApp();
             } else { 
-                alert("❌ Username atau Password salah!"); 
+                alert("❌ Login Gagal: Username atau Password salah!"); 
             }
         } catch (e) { 
-            alert("⚠️ SISTEM DATABASE OFFLINE\nPastikan Google Apps Script sudah di-Deploy dengan benar."); 
+            console.error(e);
+            alert("⚠️ KONEKSI DATABASE GAGAL\nPastikan URL Apps Script benar dan Deployment disetel ke 'Anyone'."); 
         }
         document.getElementById('loadingOverlay').style.display = 'none';
     }
@@ -343,7 +349,8 @@
                     amount: selected.final,
                     product: selected.n,
                     duration: durVal,
-                    tg_username: tgVal
+                    tg_username: tgVal,
+                    note: document.getElementById('note').value
                 })
             });
             const result = await res.json();
