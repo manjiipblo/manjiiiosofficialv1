@@ -109,6 +109,7 @@
             border-radius: 8px;
             margin-bottom: 20px;
             letter-spacing: 1px;
+            transition: 0.3s;
         }
 
         .input-group {
@@ -200,7 +201,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Header Dashboard */
         .header {
             display: flex;
             justify-content: space-between;
@@ -220,9 +220,7 @@
             text-transform: uppercase;
         }
 
-        .balance-box {
-            text-align: right;
-        }
+        .balance-box { text-align: right; }
         .balance-amount {
             font-family: 'Rajdhani', sans-serif;
             font-size: 20px;
@@ -231,7 +229,6 @@
             text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
         }
 
-        /* Product Grid (Centered Layout) */
         .product-grid-container {
             display: grid;
             grid-template-columns: 1fr;
@@ -360,9 +357,7 @@
             transition: color 0.3s;
         }
         
-        .nav-back:hover {
-            color: var(--neon-blue);
-        }
+        .nav-back:hover { color: var(--neon-blue); }
     </style>
 </head>
 <body>
@@ -374,15 +369,15 @@
             <div class="brand-title">⚡ MANJII iOS</div>
             <div class="brand-subtitle">Premium Mod & Optimizations</div>
             
-            <div class="login-label">🔐 LOGIN RESELLER / CUSTOMER</div>
+            <div id="login-notif" class="login-label">🔐 MENU LOGIN CUSTOMER</div>
             
             <div class="input-group">
                 <label>Username</label>
-                <input type="text" id="login-username" class="input-control" placeholder="Masukkan username akun">
+                <input type="text" id="login-username" class="input-control" placeholder="Masukkan username" oninput="updateLoginHeader()">
             </div>
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" id="login-password" class="input-control" placeholder="Masukkan password akun">
+                <input type="password" id="login-password" class="input-control" placeholder="Masukkan password">
             </div>
             
             <button class="btn btn-primary mt-3" onclick="doLogin()">MASUK AKUN</button>
@@ -397,7 +392,6 @@
     <div id="register-screen" class="screen">
         <div class="glass-panel" style="margin-top: 10vh;">
             <div class="brand-title">⚡ MANJII iOS</div>
-            
             <div class="login-label" style="background: rgba(79, 172, 254, 0.1); border-color: var(--neon-purple);">📝 DAFTAR CUSTOMER BARU</div>
             
             <div class="input-group">
@@ -425,94 +419,60 @@
                 <div class="balance-amount" id="dash-balance">Rp 0</div>
             </div>
         </div>
-
         <h3 style="margin-bottom: 15px; color: var(--text-muted); text-align: center;">🛒 KATALOG PRODUK</h3>
-        <div id="product-list" class="product-grid-container">
-            </div>
+        <div id="product-list" class="product-grid-container"></div>
     </div>
 
     <div id="product-detail-screen" class="screen">
-        <div class="nav-back" onclick="switchScreen('dashboard-screen')">
-            ← Kembali ke Katalog
-        </div>
-        
+        <div class="nav-back" onclick="switchScreen('dashboard-screen')">← Kembali ke Katalog</div>
         <div class="glass-panel" style="padding: 0; overflow: hidden;">
             <div style="padding: 20px; text-align: center; border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.2);">
-                <img id="detail-img" src="" style="width: 120px; height: 120px; object-fit: cover; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.5);">
+                <img id="detail-img" src="" style="width: 120px; height: 120px; object-fit: cover; border-radius: 15px; margin-bottom: 10px;">
                 <h2 id="detail-title">Nama Produk</h2>
                 <div class="balance-amount" id="detail-price" style="font-size: 24px; margin-top: 5px;">Rp 0</div>
             </div>
-            
             <div style="padding: 20px;">
                 <div id="variants-container" style="display: none;">
                     <label style="font-size: 12px; color: var(--text-muted);">PILIH DURASI / LISENSI:</label>
                     <div class="variant-grid" id="variants-grid"></div>
                 </div>
-
                 <div class="input-group mt-3">
                     <label>📱 USERNAME TELEGRAM PEMBELI</label>
-                    <input type="text" id="order-tg" class="input-control" placeholder="@username_anda" required>
+                    <input type="text" id="order-tg" class="input-control" placeholder="@username_anda">
                 </div>
-                
                 <div class="input-group">
                     <label>💳 METODE PEMBAYARAN</label>
-                    <div class="input-control" style="background: rgba(79, 172, 254, 0.1); border-color: var(--neon-blue); cursor: not-allowed; text-align: center; font-weight: bold;">
-                        ⚡ Saldo Akun (Otomatis)
-                    </div>
+                    <div class="input-control" style="background: rgba(79, 172, 254, 0.1); border-color: var(--neon-blue); cursor: not-allowed; text-align: center; font-weight: bold;">⚡ Saldo Akun (Otomatis)</div>
                 </div>
-
-                <div class="input-group">
-                    <label>📝 CATATAN (OPSIONAL)</label>
-                    <input type="text" id="order-note" class="input-control" placeholder="Tambahkan catatan...">
-                </div>
-
-                <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; font-size: 11px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">
-                    ℹ️ <b>Tata Cara Pembelian:</b><br>Pastikan saldo akun mencukupi. Setelah memproses pembayaran, produk akan dikirimkan otomatis oleh Bot Telegram ke username yang diisi.
-                </div>
-
                 <button class="btn btn-primary" onclick="goToConfirm()">BELI SEKARANG 🚀</button>
             </div>
         </div>
     </div>
 
     <div id="confirm-screen" class="screen">
-        <div class="nav-back" onclick="switchScreen('product-detail-screen')">
-            ← Edit Order
-        </div>
-        
+        <div class="nav-back" onclick="switchScreen('product-detail-screen')">← Edit Order</div>
         <div class="glass-panel">
-            <h2 class="text-center" style="margin-bottom: 20px; color: var(--neon-blue);">CEK STATUS FORMAT ORDER</h2>
-            
+            <h2 class="text-center" style="margin-bottom: 20px; color: var(--neon-blue);">KONFIRMASI PESANAN</h2>
             <div style="line-height: 2.5; font-size: 14px;">
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <span style="color: var(--text-muted);">Produk:</span>
-                    <strong id="conf-product" style="text-align: right;"></strong>
+                    <span style="color: var(--text-muted);">Produk:</span> <strong id="conf-product"></strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <span style="color: var(--text-muted);">Telegram:</span>
-                    <strong id="conf-tg"></strong>
+                    <span style="color: var(--text-muted);">Telegram:</span> <strong id="conf-tg"></strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <span style="color: var(--text-muted);">Total Harga:</span>
-                    <strong id="conf-price" style="color: var(--neon-blue); font-size: 16px;"></strong>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <span style="color: var(--text-muted);">Sisa Saldo Nanti:</span>
-                    <strong id="conf-balance-after"></strong>
+                    <span style="color: var(--text-muted);">Total Harga:</span> <strong id="conf-price" style="color: var(--neon-blue);"></strong>
                 </div>
             </div>
-
-            <button class="btn btn-primary mt-3" style="margin-top: 30px;" onclick="startPayment()">KONFIRMASI & BAYAR ✅</button>
+            <button class="btn btn-primary mt-3" onclick="startPayment()">KONFIRMASI & BAYAR ✅</button>
         </div>
     </div>
 
     <div id="loading-screen" class="screen">
         <div class="glass-panel loader-container">
-            <div style="font-size: 50px; animation: spin 2s linear infinite;">⚙️</div>
+            <div style="font-size: 50px; animation: stars 2s linear infinite;">⚙️</div>
             <div class="status-text" id="loading-text">MEMPROSES PEMBAYARAN... 0%</div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="loading-fill"></div>
-            </div>
+            <div class="progress-bar"><div class="progress-fill" id="loading-fill"></div></div>
         </div>
     </div>
 
@@ -520,116 +480,83 @@
         <div class="glass-panel text-center" style="margin-top: 5vh;">
             <div class="success-icon">✅</div>
             <h2>PEMBAYARAN BERHASIL</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-top: 10px;">Saldo otomatis berkurang. Transaksi diproses.</p>
-            
             <div class="trx-box">
-                <div style="text-align: left;">
-                    <div style="font-size: 10px; color: var(--text-muted);">ID TRANSAKSI</div>
-                    <div id="trx-id" style="font-family: 'Rajdhani'; font-size: 18px; font-weight: bold; color: white;">TRX-...</div>
-                </div>
-                <button onclick="copyTrx()" style="background: var(--neon-purple); border: none; padding: 8px 12px; border-radius: 6px; color: white; cursor: pointer; font-size: 12px;">COPY</button>
+                <div id="trx-id" style="font-family: 'Rajdhani'; font-weight: bold;">TRX-ID</div>
+                <button onclick="copyTrx()" style="background: var(--neon-purple); border: none; padding: 5px 10px; border-radius: 5px; color: white;">COPY</button>
             </div>
-
-            <div style="background: rgba(0, 242, 254, 0.1); border: 1px solid var(--neon-blue); padding: 15px; border-radius: 10px; font-size: 13px; margin-bottom: 20px; line-height: 1.5;">
-                🤖 <b>Cek Bot Telegram Sekarang!</b><br>
-                Produk sedang dikirimkan ke <b><span id="succ-tg" style="color: var(--neon-blue);"></span></b>.
-            </div>
-
-            <button class="btn btn-outline" onclick="backToDashboard()">KEMBALI KE BERANDA</button>
+            <button class="btn btn-outline" onclick="location.reload()">KEMBALI KE BERANDA</button>
         </div>
     </div>
 
 </div>
 
 <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwr7fr2OYeIYl1UnE0LsMs8i4Tar2NvNMwh1Lw7lsTFUu8jXec8ITAjE9hxASMCVefheg/exec";
-
-    // --- Database Produk dengan Tambahan Deskripsi ---
     const products = [
         { id: 'panel', name: 'PANEL iOS', desc: 'Akses penuh untuk manajemen device dan kebutuhan bypass iOS.', img: 'panel_ios.jpg', type: 'single', priceR: 350000, priceC: 350000 },
         { id: 'injector', name: 'INJECTOR iOS/ANDRO', desc: 'Injector optimasi performa device. Meringankan drag & 100% Anti-Ban.', img: 'injector.jpg', type: 'variants', variants: [
             { name: '1 DAY', priceR: 20000, priceC: 25000 },
             { name: '7 DAY', priceR: 40000, priceC: 50000 },
-            { name: '30 DAY', priceR: 55000, priceC: 70000 },
-            { name: '90 DAY', priceR: 85000, priceC: 100000 },
-            { name: '180 DAY', priceR: 120000, priceC: 140000 },
-            { name: '218 DAY', priceR: 145000, priceC: 160000 }
+            { name: '30 DAY', priceR: 55000, priceC: 70000 }
         ]},
         { id: 'cheat', name: 'CHEAT MANJII iOS', desc: 'Modifikasi eksklusif dengan fitur premium untuk player iOS.', img: 'cheat_manjii_ios.jpg', type: 'single', priceR: 200000, priceC: 250000 },
         { id: 'gbox', name: 'GBOX 1 TAHUN', desc: 'Lisensi GBox virtual environment untuk 1 tahun penuh.', img: 'gbox.jpg', type: 'single', priceR: 130000, priceC: 150000 },
         { id: 'esign', name: 'ESIGN 1 TAHUN', desc: 'Layanan signature aplikasi langsung dari device iOS.', img: 'esign.jpg', type: 'single', priceR: 130000, priceC: 150000 }
     ];
 
-    let currentUser = { username: '', role: '', balance: 0 };
+    let currentUser = null;
     let currentProduct = null;
     let selectedVariantIndex = 0;
-    let orderDetails = {};
 
     const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
-    const switchScreen = (screenId) => {
+
+    function switchScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    };
+        document.getElementById(id).classList.add('active');
+    }
 
-    async function apiRequest(action, data) {
-        try {
-            const params = new URLSearchParams({ action: action, ...data });
-            fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                body: params
-            }).catch(e => console.log("API Fetch error, using fallback."));
-
-            return await localFallbackAPI(action, data);
-        } catch (error) {
-            return await localFallbackAPI(action, data);
+    // Pemisahan Judul Login
+    function updateLoginHeader() {
+        const userVal = document.getElementById('login-username').value.toLowerCase();
+        const label = document.getElementById('login-notif');
+        if(userVal.includes('reseller')) {
+            label.innerText = "🔐 MENU LOGIN RESELLER";
+            label.style.borderColor = "var(--neon-purple)";
+            label.style.color = "var(--neon-purple)";
+        } else {
+            label.innerText = "🔐 MENU LOGIN CUSTOMER";
+            label.style.borderColor = "var(--neon-blue)";
+            label.style.color = "var(--neon-blue)";
         }
     }
 
-    // Fallback disesuaikan: saldo awal semua user adalah 0 rupiah
-    function localFallbackAPI(action, data) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                if (action === 'login') {
-                    const isReseller = data.username.toLowerCase().includes('reseller');
-                    resolve({ status: 'success', role: isReseller ? 'reseller' : 'customer', balance: 0 }); // Saldo fix 0
-                } else if (action === 'register') {
-                    resolve({ status: 'success' });
-                } else if (action === 'buy') {
-                    resolve({ status: 'success', newBalance: data.currentBalance - data.price });
-                }
-            }, 800);
-        });
+    // Database Lokal (Mencegah login ngacak)
+    function doRegister() {
+        const u = document.getElementById('reg-username').value;
+        const p = document.getElementById('reg-password').value;
+        if(!u || !p) return alert("Lengkapi data!");
+
+        let db = JSON.parse(localStorage.getItem('manjii_db') || '[]');
+        if(db.find(x => x.u === u)) return alert("Username sudah digunakan!");
+
+        db.push({ u, p, role: u.toLowerCase().includes('reseller') ? 'reseller' : 'customer', bal: 0 });
+        localStorage.setItem('manjii_db', JSON.stringify(db));
+        
+        alert("Pendaftaran berhasil! Silakan Login.");
+        switchScreen('login-screen');
     }
 
-    async function doLogin() {
-        const user = document.getElementById('login-username').value;
-        const pass = document.getElementById('login-password').value;
-        if(!user || !pass) return alert("Isi username dan password terlebih dahulu!");
-
-        const btn = document.querySelector('#login-screen .btn-primary');
-        btn.innerHTML = "LOADING...";
-
-        const res = await apiRequest('login', { username: user, password: pass });
-        btn.innerHTML = "MASUK AKUN";
-
-        if(res.status === 'success') {
-            currentUser = { username: user, role: res.role, balance: res.balance || 0 };
+    function doLogin() {
+        const u = document.getElementById('login-username').value;
+        const p = document.getElementById('login-password').value;
+        let db = JSON.parse(localStorage.getItem('manjii_db') || '[]');
+        
+        const user = db.find(x => x.u === u && x.p === p);
+        if(user) {
+            currentUser = { username: user.u, role: user.role, balance: user.bal };
             renderDashboard();
             switchScreen('dashboard-screen');
         } else {
-            alert("Login Gagal!");
-        }
-    }
-
-    async function doRegister() {
-        const user = document.getElementById('reg-username').value;
-        const pass = document.getElementById('reg-password').value;
-        if(!user || !pass) return alert("Isi username dan password!");
-
-        const res = await apiRequest('register', { username: user, password: pass, role: 'customer' });
-        if(res.status === 'success') {
-            alert("Pendaftaran berhasil! Saldo akun Anda saat ini Rp 0. Silakan login.");
-            switchScreen('login-screen');
+            alert("Akun tidak ditemukan atau Password salah! Wajib mendaftar akun terlebih dahulu.");
         }
     }
 
@@ -640,157 +567,73 @@
 
         const list = document.getElementById('product-list');
         list.innerHTML = '';
-
-        products.forEach((p, idx) => {
-            let displayPrice = p.type === 'single' ? 
-                (currentUser.role === 'reseller' ? p.priceR : p.priceC) : 
-                (currentUser.role === 'reseller' ? p.variants[0].priceR : p.variants[0].priceC);
-
-            // Tampilan Card Produk (Gambar Tengah & Deskripsi)
+        products.forEach((p, i) => {
+            let price = p.type === 'single' ? (currentUser.role === 'reseller' ? p.priceR : p.priceC) : (currentUser.role === 'reseller' ? p.variants[0].priceR : p.variants[0].priceC);
             list.innerHTML += `
                 <div class="product-card">
-                    <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/180/1a1a2e/00f2fe?text=IMAGE'">
-                    <div class="product-info">
-                        <h3>${p.name}</h3>
-                        <p class="product-desc">${p.desc}</p>
-                        <div class="product-price">${formatRp(displayPrice)} ${p.type==='variants' ? '<span style="font-size:10px; color:#a0a5b1; font-family:Inter;">(Mulai dari)</span>' : ''}</div>
-                    </div>
-                    <button class="btn btn-buy" onclick="openProduct(${idx})">BUY NOW 🛒</button>
+                    <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/180'">
+                    <h3>${p.name}</h3>
+                    <p class="product-desc">${p.desc}</p>
+                    <div class="product-price">${formatRp(price)}</div>
+                    <button class="btn btn-buy" onclick="openProduct(${i})">BUY NOW 🛒</button>
                 </div>
             `;
         });
     }
 
-    function openProduct(index) {
-        currentProduct = products[index];
-        selectedVariantIndex = 0;
-        
+    function openProduct(i) {
+        currentProduct = products[i];
         document.getElementById('detail-title').innerText = currentProduct.name;
         document.getElementById('detail-img').src = currentProduct.img;
-        document.getElementById('order-tg').value = '';
-        document.getElementById('order-note').value = '';
-
-        const variantsContainer = document.getElementById('variants-container');
-        const variantsGrid = document.getElementById('variants-grid');
-
-        if(currentProduct.type === 'single') {
-            variantsContainer.style.display = 'none';
-            let price = currentUser.role === 'reseller' ? currentProduct.priceR : currentProduct.priceC;
-            document.getElementById('detail-price').innerText = formatRp(price);
+        
+        const vContainer = document.getElementById('variants-container');
+        if(currentProduct.type === 'variants') {
+            vContainer.style.display = 'block';
+            const grid = document.getElementById('variants-grid');
+            grid.innerHTML = '';
+            currentProduct.variants.forEach((v, vi) => {
+                grid.innerHTML += `<div class="variant-btn ${vi===0?'selected':''}" onclick="selectedVariantIndex=${vi}; updatePrice()">${v.name}</div>`;
+            });
         } else {
-            variantsContainer.style.display = 'block';
-            renderVariants();
+            vContainer.style.display = 'none';
         }
-
+        updatePrice();
         switchScreen('product-detail-screen');
     }
 
-    function renderVariants() {
-        const grid = document.getElementById('variants-grid');
-        grid.innerHTML = '';
-        currentProduct.variants.forEach((v, idx) => {
-            grid.innerHTML += `<div class="variant-btn ${idx === selectedVariantIndex ? 'selected' : ''}" onclick="selectVariant(${idx})">${v.name}</div>`;
-        });
-        updateVariantPrice();
-    }
-
-    function selectVariant(idx) {
-        selectedVariantIndex = idx;
-        renderVariants();
-    }
-
-    function updateVariantPrice() {
-        let v = currentProduct.variants[selectedVariantIndex];
-        let price = currentUser.role === 'reseller' ? v.priceR : v.priceC;
-        document.getElementById('detail-price').innerText = formatRp(price);
-    }
-
-    function getSelectedPrice() {
-        if(currentProduct.type === 'single') {
-            return currentUser.role === 'reseller' ? currentProduct.priceR : currentProduct.priceC;
-        } else {
-            return currentUser.role === 'reseller' ? currentProduct.variants[selectedVariantIndex].priceR : currentProduct.variants[selectedVariantIndex].priceC;
-        }
-    }
-
-    function getSelectedName() {
-        if(currentProduct.type === 'single') return currentProduct.name;
-        return `${currentProduct.name} - ${currentProduct.variants[selectedVariantIndex].name}`;
+    function updatePrice() {
+        let p = currentProduct.type === 'single' ? (currentUser.role === 'reseller' ? currentProduct.priceR : currentProduct.priceC) : (currentUser.role === 'reseller' ? currentProduct.variants[selectedVariantIndex].priceR : currentProduct.variants[selectedVariantIndex].priceC);
+        document.getElementById('detail-price').innerText = formatRp(p);
+        document.querySelectorAll('.variant-btn').forEach((b, i) => b.classList.toggle('selected', i === selectedVariantIndex));
     }
 
     function goToConfirm() {
         const tg = document.getElementById('order-tg').value;
-        if(!tg.includes('@')) return alert("Gunakan format @ untuk username telegram pembeli!");
+        if(!tg.startsWith('@')) return alert("Gunakan @ pada username Telegram!");
+        
+        let p = currentProduct.type === 'single' ? (currentUser.role === 'reseller' ? currentProduct.priceR : currentProduct.priceC) : (currentUser.role === 'reseller' ? currentProduct.variants[selectedVariantIndex].priceR : currentProduct.variants[selectedVariantIndex].priceC);
+        
+        if(currentUser.balance < p) return alert("Saldo kamu Rp 0. Silakan hubungi Admin untuk Top Up!");
 
-        const price = getSelectedPrice();
-        if(currentUser.balance < price) {
-            return alert(`Saldo kamu tidak mencukupi!\nSisa Saldo: ${formatRp(currentUser.balance)}\nHarga Produk: ${formatRp(price)}\n\nSilakan minta Admin MANJII iOS untuk mengisi saldo.`);
-        }
-
-        orderDetails = {
-            productName: getSelectedName(),
-            tg: tg,
-            price: price,
-            note: document.getElementById('order-note').value
-        };
-
-        document.getElementById('conf-product').innerText = orderDetails.productName;
-        document.getElementById('conf-tg').innerText = orderDetails.tg;
-        document.getElementById('conf-price').innerText = formatRp(orderDetails.price);
-        document.getElementById('conf-balance-after').innerText = formatRp(currentUser.balance - orderDetails.price);
-
+        document.getElementById('conf-product').innerText = currentProduct.name;
+        document.getElementById('conf-tg').innerText = tg;
+        document.getElementById('conf-price').innerText = formatRp(p);
         switchScreen('confirm-screen');
     }
 
     function startPayment() {
         switchScreen('loading-screen');
-        let progress = 0;
-        const fill = document.getElementById('loading-fill');
-        const text = document.getElementById('loading-text');
-
-        const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 15) + 5;
-            if(progress > 100) progress = 100;
-            
-            fill.style.width = progress + '%';
-            text.innerText = `MEMPROSES PEMBAYARAN... ${progress}%`;
-
-            if(progress === 100) {
-                clearInterval(interval);
-                finalizeOrder();
+        let prog = 0;
+        const iv = setInterval(() => {
+            prog += 10;
+            document.getElementById('loading-fill').style.width = prog + '%';
+            document.getElementById('loading-text').innerText = "MEMPROSES PEMBAYARAN... " + prog + "%";
+            if(prog >= 100) {
+                clearInterval(iv);
+                document.getElementById('trx-id').innerText = "TRX-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+                switchScreen('success-screen');
             }
-        }, 300);
-    }
-
-    async function finalizeOrder() {
-        const res = await apiRequest('buy', {
-            username: currentUser.username,
-            product: orderDetails.productName,
-            price: orderDetails.price,
-            tg: orderDetails.tg,
-            currentBalance: currentUser.balance
-        });
-
-        const trxId = "TRX_MNJ" + Math.floor(Math.random() * 999999999).toString(16).toUpperCase();
-        
-        currentUser.balance -= orderDetails.price; 
-        document.getElementById('dash-balance').innerText = formatRp(currentUser.balance);
-        
-        document.getElementById('trx-id').innerText = trxId;
-        document.getElementById('succ-tg').innerText = orderDetails.tg;
-
-        switchScreen('success-screen');
-    }
-
-    function copyTrx() {
-        const text = document.getElementById('trx-id').innerText;
-        navigator.clipboard.writeText(text);
-        alert("ID Transaksi berhasil disalin!");
-    }
-
-    function backToDashboard() {
-        renderDashboard();
-        switchScreen('dashboard-screen');
+        }, 200);
     }
 </script>
 </body>
