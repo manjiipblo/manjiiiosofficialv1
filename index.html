@@ -292,7 +292,6 @@
     // === LINK DATABASE GOOGLE SHEETS ANDA ===
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxj_4aq9_mHeAw3NOryrEpj8EiYs-0OtCIgMmITarzZPWjBCGRcI4l5fngo90KbNsljNw/exec";
 
-    // Data Produk Asli
     const products = [
         { id: 'panel', name: 'PANEL iOS', desc: 'NIKMATI PENGALAMAN BERMAIN YANG LEBIH MAKSIMAL, ATUR SETINGAN SESUKANYA !!!', img: 'panel_ios.jpg', type: 'single', priceR: 350000, priceC: 350000 },
         { id: 'injector', name: 'INJECTOR iOS/ANDRO', desc: 'INJECTOR OPTIMASI PERFORMA DEVICE. MERINGANKAN DRAG & 100% ANTI BAND, ANTI BLACKLIST, ANTI SURCIN.', img: 'injector.jpg', type: 'variants', variants: [
@@ -320,26 +319,28 @@
         window.scrollTo(0,0);
     };
 
-    // FUNGSI REGISTER: Kirim Data ke Google Sheets
     async function doRegister() {
         const user = document.getElementById('reg-username').value.trim();
         const pass = document.getElementById('reg-password').value.trim();
-        
         if(!user || !pass) return alert("Harap isi username dan password!");
 
         try {
-            await fetch(`${SCRIPT_URL}?action=register&username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`, { mode: 'no-cors' });
+            const response = await fetch(`${SCRIPT_URL}?action=register&username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`);
+            const data = await response.json();
             
-            alert("Pendaftaran berhasil! Akun kamu sudah tersimpan, silakan login.");
-            document.getElementById('reg-username').value = '';
-            document.getElementById('reg-password').value = '';
-            switchScreen('login-customer-screen');
+            if(data.status === 'success') {
+                alert("Pendaftaran berhasil! Silakan login.");
+                document.getElementById('reg-username').value = '';
+                document.getElementById('reg-password').value = '';
+                switchScreen('login-customer-screen');
+            } else {
+                alert("❌ Gagal: " + data.message);
+            }
         } catch(e) {
-            alert("❌ Terjadi kesalahan saat mendaftar. Coba lagi nanti.");
+            alert("❌ Terjadi kesalahan koneksi saat mendaftar.");
         }
     }
 
-    // FUNGSI LOGIN: Validasi Ketat ke Google Sheets
     async function doLogin(role) {
         let user, pass;
         if (role === 'customer') {
@@ -360,16 +361,10 @@
                 currentUser = { username: user, role: role, balance: data.balance || 0 };
                 masukDashboard();
             } else {
-                alert("❌ Login Gagal! Username atau password salah.");
+                alert("❌ Login Gagal! " + data.message);
             }
         } catch (e) {
-            // Hardcode akses reseller (Bawaan Script Asli) jika koneksi API error
-            if (role === 'reseller' && user === 'admin_reseller' && pass === 'reseller123') { 
-                currentUser = { username: user, role: 'reseller', balance: 1500000 };
-                masukDashboard();
-            } else {
-                alert("❌ Gagal terhubung ke database. Cek koneksi / setting Apps Script Anda.");
-            }
+            alert("❌ Gagal terhubung ke database. Pastikan koneksi internet stabil.");
         }
     }
 
@@ -427,19 +422,16 @@
         return currentProduct.type === 'single' ? (currentUser.role === 'reseller' ? currentProduct.priceR : currentProduct.priceC) : (currentUser.role === 'reseller' ? currentProduct.variants[selectedVariantIndex].priceR : currentProduct.variants[selectedVariantIndex].priceC);
     }
 
-    // FUNGSI VALIDASI TELEGRAM KETAT (Tidak bisa asal ketik)
     function goToConfirm() {
         const tgInput = document.getElementById('order-tg').value.trim();
-        
-        // Regex: Wajib ada @ di awal, minimal 5 karakter (contoh: @user123)
         const tgRegex = /^@[a-zA-Z0-9_]{4,}$/; 
 
         if(!tgRegex.test(tgInput)) {
-            return alert("❌ Username Telegram tidak valid!\nFormat yang benar: Wajib diawali tanda '@' dan minimal terdiri dari 5 karakter. Contoh: @username_kamu");
+            return alert("❌ Username Telegram tidak valid!\nFormat: Wajib diawali '@' dan minimal 5 karakter.");
         }
 
         const price = getSelectedPrice();
-        if(currentUser.balance < price) return alert(`❌ Saldo kamu tidak mencukupi!\nTotal Tagihan: ${formatRp(price)}`);
+        if(currentUser.balance < price) return alert(`❌ Saldo kamu tidak mencukupi!\nTagihan: ${formatRp(price)}\nSilakan deposit via Bot.`);
 
         orderDetails = { productName: currentProduct.name, tg: tgInput, price: price };
         
@@ -461,17 +453,16 @@
         }, 400);
     }
 
-    // UPDATE DATABASE TRANSAKSI
     async function finalizeOrder() {
         const price = orderDetails.price;
         currentUser.balance -= price; 
         const trxId = "TRX_MNJ" + Math.floor(Math.random() * 999999999).toString(16).toUpperCase();
 
         try {
-            // Mengirim riwayat pembelian dan update saldo ke Sheets
-            await fetch(`${SCRIPT_URL}?action=order&role=${currentUser.role}&username=${encodeURIComponent(currentUser.username)}&product=${encodeURIComponent(orderDetails.productName)}&price=${price}&newBalance=${currentUser.balance}&tg=${encodeURIComponent(orderDetails.tg)}&trxId=${trxId}`, { mode: 'no-cors' });
+            // Update saldo di Google Sheets
+            await fetch(`${SCRIPT_URL}?action=order&username=${encodeURIComponent(currentUser.username)}&newBalance=${currentUser.balance}`);
         } catch(e) {
-            console.log("Transaksi dilanjutkan.");
+            console.log("Transaksi dilanjutkan (background update).");
         }
 
         document.getElementById('dash-balance').innerText = formatRp(currentUser.balance);
