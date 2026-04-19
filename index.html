@@ -629,37 +629,60 @@
         });
     }
 
-    async function doLogin() {
-        const user = document.getElementById('login-username').value;
-        const pass = document.getElementById('login-password').value;
-        if(!user || !pass) return alert("Isi username dan password terlebih dahulu!");
+     let usersDB = JSON.parse(localStorage.getItem('manjii_customers_db')) || [];
 
-        const btn = document.querySelector('#login-screen .btn-primary');
-        btn.innerHTML = "LOADING...";
+    const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
+    const switchScreen = (screenId) => {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+        window.scrollTo(0,0);
+    };
 
-        const res = await apiRequest('login', { username: user, password: pass });
-        btn.innerHTML = "MASUK AKUN";
+    function doRegister() {
+        const user = document.getElementById('reg-username').value.trim();
+        const pass = document.getElementById('reg-password').value.trim();
+        
+        if(!user || !pass) return alert("Harap isi username dan password!");
+        
+        const isExist = usersDB.find(u => u.username === user);
+        if(isExist) return alert("Username sudah terdaftar! Silakan gunakan nama lain.");
 
-        if(res.status === 'success') {
-            currentUser = { username: user, role: res.role, balance: res.balance || 0 };
-            renderDashboard();
-            switchScreen('dashboard-screen');
-        } else {
-            alert("Login Gagal!");
-        }
-    }
+        usersDB.push({ username: user, password: pass, balance: 0 });
+        localStorage.setItem('manjii_customers_db', JSON.stringify(usersDB));
 
-    async function doRegister() {
-        const user = document.getElementById('reg-username').value;
-        const pass = document.getElementById('reg-password').value;
-        if(!user || !pass) return alert("Isi username dan password!");
+        alert("Pendaftaran berhasil! Akun kamu sudah tersimpan, silakan login.");
+        document.getElementById('reg-username').value = '';
+        document.getElementById('reg-password').value = '';
+        switchScreen('login-customer-screen');
+    }
 
-        const res = await apiRequest('register', { username: user, password: pass, role: 'customer' });
-        if(res.status === 'success') {
-            alert("Pendaftaran berhasil! Saldo akun Anda saat ini Rp 0. Silakan login.");
-            switchScreen('login-screen');
-        }
-    }
+    function doLogin(role) {
+        if (role === 'customer') {
+            const user = document.getElementById('login-cust-username').value.trim();
+            const pass = document.getElementById('login-cust-password').value.trim();
+            if(!user || !pass) return alert("Harap isi username dan password!");
+
+            const validUser = usersDB.find(u => u.username === user && u.password === pass);
+            if(validUser) {
+                currentUser = { username: validUser.username, role: 'customer', balance: validUser.balance };
+                masukDashboard();
+            } else {
+                alert("❌ Login Gagal! Username atau password salah. Pastikan kamu sudah mendaftar akun terlebih dahulu.");
+            }
+
+        } else if (role === 'reseller') {
+            const user = document.getElementById('login-res-username').value;
+            const pass = document.getElementById('login-res-password').value;
+            
+           if(user === 'admin_reseller' && pass === 'reseller123') { 
+                currentUser = { username: user, role: 'reseller', balance: 1500000 };
+                masukDashboard();
+            } else {
+                alert("❌ Akses Ditolak! Data Reseller tidak valid.");
+            }
+        }
+    }
+
 
     function renderDashboard() {
         document.getElementById('dash-username').innerText = currentUser.username;
