@@ -344,7 +344,8 @@
     async function doLogin(role) {
     let user, pass;
     
-    // Mengambil input berdasarkan role
+    // 1. Ambil input berdasarkan role yang dipilih
+    // Pastikan ID ini (login-cust-username, dll) sesuai dengan yang ada di tag <input> Anda
     if (role === 'customer') {
         user = document.getElementById('login-cust-username').value.trim();
         pass = document.getElementById('login-cust-password').value.trim();
@@ -356,38 +357,45 @@
     if(!user || !pass) return alert("Harap isi username dan password!");
 
     try {
-        // WAJIB menggunakan method POST agar masuk ke fungsi doPost di App Script Anda
+        // 2. Kirim POST request ke App Script (Memanggil fungsi doPost)
         const response = await fetch(SCRIPT_URL, {
             method: 'POST',
-            body: JSON.stringify({ action: 'get_database' }) 
+            body: JSON.stringify({ action: 'get_database' })
         });
 
         const result = await response.json();
 
         if (result.status === 'success') {
-            // Kita filter data dari list yang dikirim oleh action 'get_database'
-            const userList = (role === 'reseller') ? result.data.reseller : result.data.customer;
+            // 3. Tentukan list mana yang mau dicek (reseller atau customer)
+            // Sesuai dengan struktur return script App Anda: result.data.reseller atau result.data.customer
+            const listUser = (role === 'reseller') ? result.data.reseller : result.data.customer;
             
-            // Mencari user yang username (u) dan password (p) nya cocok
-            const foundUser = userList.find(item => item.u === user && item.p === pass);
+            // 4. Cari user yang username (u) dan password (p) nya cocok
+            const foundUser = listUser.find(item => 
+                String(item.u).trim() === user && 
+                String(item.p).trim() === pass
+            );
 
             if (foundUser) {
-                // Set data user ke dashboard
+                // 5. Simpan data user ke variabel global website
                 currentUser = { 
                     username: foundUser.u, 
                     role: role, 
-                    balance: foundUser.s || 0 
+                    balance: Number(foundUser.s) || 0 // 's' adalah saldo dari script App Anda
                 };
-                masukDashboard();
+                
+                alert("Login Berhasil sebagai " + role.toUpperCase());
+                masukDashboard(); // Pindah ke tampilan dashboard
             } else {
-                alert("❌ Login Gagal: Username atau Password salah untuk role " + role.toUpperCase());
+                // Jika tidak ditemukan di list yang dipilih
+                alert("❌ Login Gagal: Username atau Password tidak ditemukan di kategori " + role.toUpperCase());
             }
         } else {
-            alert("❌ Gagal mengambil data: " + result.message);
+            alert("❌ Gagal mengambil data dari database: " + result.message);
         }
     } catch (e) {
-        console.error(e);
-        alert("❌ Terjadi kesalahan koneksi. Pastikan SCRIPT_URL sudah benar.");
+        console.error("Detail Error:", e);
+        alert("❌ Terjadi kesalahan koneksi ke server.");
     }
 }
 
