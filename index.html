@@ -291,8 +291,8 @@
 <script>
     // Data Produk Asli
     const products = [
-        { id: 'panel', name: 'PANEL iOS', desc: 'Akses penuh untuk manajemen device dan kebutuhan bypass iOS.', img: 'panel_ios.jpg', type: 'single', priceR: 350000, priceC: 350000 },
-        { id: 'injector', name: 'INJECTOR iOS/ANDRO', desc: 'Injector optimasi performa device. Meringankan drag & 100% Anti-Ban.', img: 'injector.jpg', type: 'variants', variants: [
+        { id: 'panel', name: 'PANEL iOS', desc: 'NIKMATI SENSI BRUTAL - STANDAR, BEBAS ATUR SETINGAN.', img: 'panel_ios.jpg', type: 'single', priceR: 300000, priceC: 350000 },
+        { id: 'injector', name: 'INJECTOR iOS/ANDRO', desc: 'INJECTOR OPTIMASI PERFORMANCE. MERINGANKAN DRAG & 100% ANTI BAND, ANTI BLACKLIST, ANTI SURCIN.', img: 'injector.jpg', type: 'variants', variants: [
             { name: '1 DAY', priceR: 20000, priceC: 25000 },
             { name: '7 DAY', priceR: 40000, priceC: 50000 },
             { name: '30 DAY', priceR: 55000, priceC: 70000 },
@@ -300,9 +300,15 @@
             { name: '180 DAY', priceR: 120000, priceC: 140000 },
             { name: '218 DAY', priceR: 145000, priceC: 160000 }
         ]},
-        { id: 'cheat', name: 'CHEAT MANJII iOS', desc: 'Modifikasi eksklusif dengan fitur premium untuk player iOS.', img: 'cheat_manjii_ios.jpg', type: 'single', priceR: 200000, priceC: 250000 },
-        { id: 'gbox', name: 'GBOX 1 TAHUN', desc: 'Lisensi GBox virtual environment untuk 1 tahun penuh.', img: 'gbox.jpg', type: 'single', priceR: 130000, priceC: 150000 },
-        { id: 'esign', name: 'ESIGN 1 TAHUN', desc: 'Layanan signature aplikasi langsung dari device iOS.', img: 'esign.jpg', type: 'single', priceR: 130000, priceC: 150000 }
+        { id: 'cheat', name: 'CHEAT MANJII iOS', desc: 'Modifikasi eksklusif dengan fitur premium untuk player iOS.', img: 'cheat_manjii_ios.jpg', type:  variants', variants: [ 
+{ name: 'AIMBODY ( BADAN HS )', priceR: 200000, priceC: 250000 },
+            { name: 'AIMNECK ( LEHER HS )', priceR: 200000, priceC: 250000 },
+            { name: 'AIMDRAG ( DRAG HS )', priceR: 200000, priceC: 250000 }
+       ]},
+            { name: 'AIMCHEST ( DADA HS )', priceR: 200000, priceC: 250000 },
+priceR: 200000, priceC: 250000 },
+        { id: 'gbox', name: 'GBOX', desc: 'LISENSI GBOX DURASI 1 TAHUN.', img: 'gbox.jpg', type: 'single', priceR: 130000, priceC: 150000 },
+        { id: 'esign', name: 'ESIGN', desc: 'LISENSI ESIGN DURASI 1 TAHUN.', img: 'esign.jpg', type: 'single', priceR: 130000, priceC: 150000 }
     ];
 
     let currentUser = { username: '', role: '', balance: 0 };
