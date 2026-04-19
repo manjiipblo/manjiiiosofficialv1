@@ -289,6 +289,9 @@
 </div>
 
 <script>
+    // === LINK DATABASE GOOGLE SHEETS ANDA ===
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwr7fr2OYeIYl1UnE0LsMs8i4Tar2NvNMwh1Lw7lsTFUu8jXec8ITAjE9hxASMCVefheg/exec";
+
     // Data Produk Asli
     const products = [
         { id: 'panel', name: 'PANEL iOS', desc: 'NIKMATI PENGALAMAN BERMAIN YANG LEBIH MAKSIMAL, ATUR SETINGAN SESUKANYA !!!', img: 'panel_ios.jpg', type: 'single', priceR: 350000, priceC: 350000 },
@@ -310,9 +313,6 @@
     let selectedVariantIndex = 0;
     let orderDetails = {};
 
-    // Inisialisasi Database LocalStorage untuk Mencegah Login Ngacak
-    let usersDB = JSON.parse(localStorage.getItem('manjii_customers_db')) || [];
-
     const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
     const switchScreen = (screenId) => {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -320,53 +320,55 @@
         window.scrollTo(0,0);
     };
 
-    // FUNGSI REGISTER: Tanpa notifikasi saldo
-    function doRegister() {
+    // FUNGSI REGISTER: Kirim Data ke Google Sheets
+    async function doRegister() {
         const user = document.getElementById('reg-username').value.trim();
         const pass = document.getElementById('reg-password').value.trim();
         
         if(!user || !pass) return alert("Harap isi username dan password!");
-        
-        const isExist = usersDB.find(u => u.username === user);
-        if(isExist) return alert("Username sudah terdaftar! Silakan gunakan nama lain.");
 
-        // Simpan ke database browser (akun wajib terdaftar)
-        usersDB.push({ username: user, password: pass, balance: 0 });
-        localStorage.setItem('manjii_customers_db', JSON.stringify(usersDB));
-
-        // Notifikasi pendaftaran sukses tanpa nominal saldo
-        alert("Pendaftaran berhasil! Akun kamu sudah tersimpan, silakan login.");
-        document.getElementById('reg-username').value = '';
-        document.getElementById('reg-password').value = '';
-        switchScreen('login-customer-screen');
+        try {
+            await fetch(`${SCRIPT_URL}?action=register&username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`, { mode: 'no-cors' });
+            
+            alert("Pendaftaran berhasil! Akun kamu sudah tersimpan, silakan login.");
+            document.getElementById('reg-username').value = '';
+            document.getElementById('reg-password').value = '';
+            switchScreen('login-customer-screen');
+        } catch(e) {
+            alert("❌ Terjadi kesalahan saat mendaftar. Coba lagi nanti.");
+        }
     }
 
-    // FUNGSI LOGIN: Validasi Ketat (Tidak bisa ngacak)
-    function doLogin(role) {
+    // FUNGSI LOGIN: Validasi Ketat ke Google Sheets
+    async function doLogin(role) {
+        let user, pass;
         if (role === 'customer') {
-            const user = document.getElementById('login-cust-username').value.trim();
-            const pass = document.getElementById('login-cust-password').value.trim();
-            if(!user || !pass) return alert("Harap isi username dan password!");
+            user = document.getElementById('login-cust-username').value.trim();
+            pass = document.getElementById('login-cust-password').value.trim();
+        } else if (role === 'reseller') {
+            user = document.getElementById('login-res-username').value.trim();
+            pass = document.getElementById('login-res-password').value.trim();
+        }
+        
+        if(!user || !pass) return alert("Harap isi username dan password!");
 
-            // Cek keakuratan data dengan database terdaftar
-            const validUser = usersDB.find(u => u.username === user && u.password === pass);
-            if(validUser) {
-                currentUser = { username: validUser.username, role: 'customer', balance: validUser.balance };
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=login&role=${role}&username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`);
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                currentUser = { username: user, role: role, balance: data.balance || 0 };
                 masukDashboard();
             } else {
-                alert("❌ Login Gagal! Username atau password salah. Pastikan kamu sudah mendaftar akun terlebih dahulu.");
+                alert("❌ Login Gagal! Username atau password salah.");
             }
-
-        } else if (role === 'reseller') {
-            const user = document.getElementById('login-res-username').value;
-            const pass = document.getElementById('login-res-password').value;
-            
-            // Hardcode akses reseller
-            if(user === 'admin_reseller' && pass === 'reseller123') { 
+        } catch (e) {
+            // Hardcode akses reseller (Bawaan Script Asli) jika koneksi API error
+            if (role === 'reseller' && user === 'admin_reseller' && pass === 'reseller123') { 
                 currentUser = { username: user, role: 'reseller', balance: 1500000 };
                 masukDashboard();
             } else {
-                alert("❌ Akses Ditolak! Data Reseller tidak valid.");
+                alert("❌ Gagal terhubung ke database. Cek koneksi / setting Apps Script Anda.");
             }
         }
     }
@@ -459,20 +461,21 @@
         }, 400);
     }
 
-    function finalizeOrder() {
-        currentUser.balance -= orderDetails.price; 
-        
-        // Update balance customer di database browser
-        if(currentUser.role === 'customer') {
-            const userIndex = usersDB.findIndex(u => u.username === currentUser.username);
-            if(userIndex > -1) {
-                usersDB[userIndex].balance = currentUser.balance;
-                localStorage.setItem('manjii_customers_db', JSON.stringify(usersDB));
-            }
+    // UPDATE DATABASE TRANSAKSI
+    async function finalizeOrder() {
+        const price = orderDetails.price;
+        currentUser.balance -= price; 
+        const trxId = "TRX_MNJ" + Math.floor(Math.random() * 999999999).toString(16).toUpperCase();
+
+        try {
+            // Mengirim riwayat pembelian dan update saldo ke Sheets
+            await fetch(`${SCRIPT_URL}?action=order&role=${currentUser.role}&username=${encodeURIComponent(currentUser.username)}&product=${encodeURIComponent(orderDetails.productName)}&price=${price}&newBalance=${currentUser.balance}&tg=${encodeURIComponent(orderDetails.tg)}&trxId=${trxId}`, { mode: 'no-cors' });
+        } catch(e) {
+            console.log("Transaksi dilanjutkan.");
         }
 
         document.getElementById('dash-balance').innerText = formatRp(currentUser.balance);
-        document.getElementById('trx-id').innerText = "TRX_MNJ" + Math.floor(Math.random() * 999999999).toString(16).toUpperCase();
+        document.getElementById('trx-id').innerText = trxId;
         document.getElementById('succ-tg').innerText = orderDetails.tg;
         switchScreen('success-screen');
     }
